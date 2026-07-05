@@ -753,7 +753,6 @@
     "edit": "Edit",
     "delete": "Delete",
     "Importing": "Importing...",
-    "price": "Price",
     "ImportfromExcel": "Import from Excel",
     "dataRefreshed": "Data refreshed successfully",
     "productList": "Product List",
@@ -938,6 +937,7 @@
   },
   "categories": {
     "category_name": "Category Name",
+    "search_categories":"search categories",
     "category_arabic_name": "Arabic Category Name",
     "company_percentage": "Company Percentage",
     "pref": "Preference",
@@ -970,6 +970,7 @@
     "category_Information": "Category Information"
   },
   "subcategories": {
+    "search_Subcategories": "search Subcategories",
     "subcategory_name": "Subcategory Name",
     "category_name": "Category Name",
     "actions": "Actions",
@@ -1435,6 +1436,7 @@
     "OrderConfiguration": "Order Configuration",
     "MinimumOrderPrice": "Minimum Order Price",
     "Set_the_minimum_price_required_for_an_order": "Set the minimum price required for an order",
-    "Save": "Save"
+    "Save": "Save",
+    "logout": "Logout"
   }
 }
