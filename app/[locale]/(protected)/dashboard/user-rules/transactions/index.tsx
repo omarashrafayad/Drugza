@@ -147,7 +147,7 @@ const TransactionsTable = ({ defaultRoleName, hideTabs = false }: TransactionsTa
     <div className={"flex flex-col"}>
       <div className="px-5 py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <SearchInput
-          placeholder="Search Email..."
+          placeholder={t("SearchEmail")}
           data={defaultRoleName ? (usersByRole ?? []) : (data ?? [])}
           filterKey={"userName"}
           setFilteredData={setFilteredUsers}
@@ -162,7 +162,7 @@ const TransactionsTable = ({ defaultRoleName, hideTabs = false }: TransactionsTa
               className="ring-0 outline-0 hover:ring-0 hover:ring-offset-0 font-normal border-default-200 rounded-none cursor-pointer"
               onClick={() => handleRoleFilter("all")}
             >
-              All
+              {t("all")}
             </Button>
 
             {roles?.map((role) => (

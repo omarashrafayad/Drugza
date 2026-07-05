@@ -133,7 +133,7 @@ const AddProduct = () => {
                 <Input value={Name} onChange={(e) => setName(e.target.value)} />
               </div>
               <div>
-                <Label className="w-[120px]">Price</Label>
+                <Label className="w-[120px]">{t("price")}</Label>
                 <Input value={Price} onChange={(e) => setPrice(Number(e.target.value))} />
               </div>
             </div>

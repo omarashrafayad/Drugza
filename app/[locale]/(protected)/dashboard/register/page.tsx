@@ -1,7 +1,9 @@
 import RegForm from "@/components/partials/auth/reg-form";
 import Image from "next/image";
 import Logo from "@/components/partials/auth/logo";
+import { useTranslations } from "next-intl";
 const Register = () => {
+  const t = useTranslations("auth");
   return (
     <>
       <div className="flex w-full items-center overflow-hidden basis-full shadow-2xl rounded-xl">
@@ -21,9 +23,9 @@ const Register = () => {
                     <Logo />
                   </div>
                 </div>
-                  <h4 className="font-medium">Sign up</h4>
+                  <h4 className="font-medium">{t("Signup")}</h4>
                   <div className="text-default-500  text-base">
-                    Create an account to start using Abu Hamda
+                    {t("CreateanaccounttostartusingAbuHamda")}
                   </div>
                 </div>
                 <RegForm />

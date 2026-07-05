@@ -110,7 +110,7 @@ export const baseColumns = ({
   const columns: ColumnDef<ProductType>[] = [
     {
       accessorKey: "images",
-      header: isArabic ? "الصورة" : "Image",
+      header: t("image"),
       cell: ({ row }) => {
         const hasImage = !!row.original.imageUrl;
         return (
@@ -130,7 +130,7 @@ export const baseColumns = ({
     },
     {
       accessorKey: "name",
-      header: "name",
+      header: t("name"),
       cell: ({ row }) => {
         return (
           <span className="text-sm font-medium">{row.original.name || t("unknown")}</span>
@@ -139,14 +139,14 @@ export const baseColumns = ({
     },
     {
       accessorKey: "description",
-      header: "Description",
+      header: t("Description"),
       cell: ({ row }) => (
         <span className="text-sm">{row.original.description}</span>
       ),
     },
     {
       accessorKey: "price",
-      header:"Price",
+      header:t("Price"),
       cell: ({ row }) => (
         <span className="text-sm">
        {row.original.price}
@@ -155,7 +155,7 @@ export const baseColumns = ({
     },
           {
       accessorKey: "sku",
-      header:"sku",
+      header:t("sku"),
       cell: ({ row }) => (
         <span className="text-sm">
        {row.original.sku ? row.original.sku : "unknown"}
@@ -164,7 +164,7 @@ export const baseColumns = ({
     },
     {
       accessorKey: "subCategoryName",
-      header:  "subCategoryName",
+      header: t("subCategoryName"),
       cell: ({ row }) => {
         return (
           <span className="text-sm">{row.original.subCategoryName || t("unknown")}</span>
@@ -173,7 +173,7 @@ export const baseColumns = ({
     },
     {
       accessorKey: "brandName",
-      header: "brandName",
+      header: t("brandName"),
       cell: ({ row }) => (
         <span className="text-sm">
           {row.original.brandName || t("unknown")}
@@ -205,7 +205,7 @@ export const baseColumns = ({
   // if (userRole === "Admin" || userRole?.toLowerCase() === "inventory" || userRole === "Preparation representative") {
     columns.push({
       id: "actions",
-      header: isArabic ? "الإجراءات" : "Actions",
+      header: t("Actions"),
       cell: ({ row }) => (
         <ActionCell row={row} refresh={refresh} t={t} userRole={userRole} />
       ),

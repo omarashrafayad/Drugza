@@ -33,9 +33,11 @@ import {useRouter} from "@/i18n/routing";
 import useGettingAllCoupons from "@/services/coupons/gettingAllCoupons";
 import {Loader2} from "lucide-react";
 import {Coupon} from "@/types/coupons";
+import {useTranslations} from "next-intl";
 
 const TransactionsTable = ({ onAdd }: { onAdd: () => void }) => {
   const router = useRouter()
+  const t = useTranslations("coupons")
   const {loading: gettingAllCouponsLoading, error: gettingAllCouponsError, coupons, getAllCoupons} = useGettingAllCoupons()
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -89,7 +91,7 @@ const TransactionsTable = ({ onAdd }: { onAdd: () => void }) => {
               className="ml-2"
               onClick={onAdd}
             >
-              Add Coupon
+              {t("add_coupon")}
             </Button>
           </div>
         </div>

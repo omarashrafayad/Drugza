@@ -6,12 +6,14 @@ import {Coupon} from "@/types/coupons";
 import {formatDateToDMY} from "@/utils";
 import {Button} from "@/components/ui/button";
 import useDeleteCoupon from "@/services/coupons/deleteCoupon";
+import { useTranslations } from "next-intl";
 
-export const baseColumns = ({refresh } : { refresh: () => void }): ColumnDef<Coupon>[] =>
-    [
+export const baseColumns = ({refresh } : { refresh: () => void }): ColumnDef<Coupon>[] => {
+    const t = useTranslations("coupons");
+    return [
         {
             accessorKey: "code",
-            header: "Code",
+            header: t("code"),
             cell: ({row}) => {
                 const code = row.original.code;
                 return (
@@ -25,7 +27,7 @@ export const baseColumns = ({refresh } : { refresh: () => void }): ColumnDef<Cou
         },
         {
             accessorKey: "discountType",
-            header: "Type",
+            header: t("discountType"),
             cell: ({row}) => {
                 const type = row.original.discountType;
                 return (
@@ -39,7 +41,7 @@ export const baseColumns = ({refresh } : { refresh: () => void }): ColumnDef<Cou
         },
         {
             accessorKey: "discountValue",
-            header: "Discount Value",
+            header: t("discountValue"),
             cell: ({ row }) => {
             const discountValue = row.original.discountValue;
             return (
@@ -53,26 +55,26 @@ export const baseColumns = ({refresh } : { refresh: () => void }): ColumnDef<Cou
         },
         {
             accessorKey: "usageLimit",
-            header: "Number of Users",
+            header: t("usageLimit"),
             cell: ({row}) => <span>{row.original.usageLimit}</span>,
         },
         {
             accessorKey: "perUserLimit",
-            header: "Per User Limit",
+            header: t("perUserLimit"),
             cell: ({row}) => <span>{row.original.perUserLimit || "N/A"}</span>,
         },{
             accessorKey: "copunUsages",
-            header: "Coupon Usages",
+            header: t("copunUsages"),
             cell: ({row}) => <span>{row.original.copunUsages}</span>,
         },
         {
             accessorKey: "startDate",
-            header: "Start Date",
+            header: t("startDate"),
             cell: ({row}) => <span>{formatDateToDMY(row.getValue("startDate"))}</span>,
         },
         {
             accessorKey: "endDate",
-            header: "End Date",
+            header: t("endDate"),
             cell: ({row}) => {
                 return <span>{formatDateToDMY(row.getValue("endDate"))}</span>;
             },
@@ -80,7 +82,7 @@ export const baseColumns = ({refresh } : { refresh: () => void }): ColumnDef<Cou
         {
             id: "actions",
             accessorKey: "action",
-            header: "Actions",
+            header: t("actions"),
             enableHiding: false,
             cell: ({row}) => {
                 const {deleteCoupon, loading} = useDeleteCoupon()
@@ -151,3 +153,4 @@ export const baseColumns = ({refresh } : { refresh: () => void }): ColumnDef<Cou
             },
         },
     ];
+}

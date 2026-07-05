@@ -22,6 +22,7 @@ import { Switch } from "@/components/ui/switch";
 import { Check, X, Loader2 } from "lucide-react";
 import useCreateCoupon from "@/services/coupons/createCoupon";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface AddCouponDialogProps {
   open: boolean;
@@ -31,7 +32,7 @@ interface AddCouponDialogProps {
 
 export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDialogProps) {
   const { createCoupon, loading } = useCreateCoupon();
-
+const t = useTranslations("coupons")
   const [formData, setFormData] = useState({
     code: "",
     description: "",
@@ -102,7 +103,7 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
           >
             <X size={20} />
           </button>
-          <DialogTitle className="text-xl font-bold text-default-900">Add Coupon</DialogTitle>
+          <DialogTitle className="text-xl font-bold text-default-900">{t("add_coupon")}</DialogTitle>
         </DialogHeader>
 
         <div className="p-6 space-y-6 overflow-y-auto max-h-[85vh]">
@@ -110,7 +111,7 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
               <div className="flex justify-between items-center mb-1">
-                 <Label className="font-medium text-default-700">Coupon Code</Label>
+                 <Label className="font-medium text-default-700">{t("code")}</Label>
                  <span 
                     className="bg-cyan-50 text-cyan-500 px-3 py-1 rounded text-xs font-medium cursor-pointer hover:bg-cyan-100 transition-colors"
                     onClick={() => handleChange("code", Math.random().toString(36).substring(2, 10).toUpperCase())}
@@ -126,11 +127,11 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
               />
             </div>
             <div className="space-y-2">
-              <Label className="block font-medium text-default-700">Description</Label>
+              <Label className="block font-medium text-default-700">{t("description")}</Label>
               <Textarea 
                 value={formData.description}
                 onChange={(e) => handleChange("description", e.target.value)}
-                placeholder="Enter coupon description" 
+                placeholder={t("Entercoupondescription")} 
                 className="min-h-[48px] bg-default-50 border-default-200"
               />
             </div>
@@ -139,7 +140,7 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
           {/* Type and Value row */}
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label className="block font-medium text-default-700">Discount Type</Label>
+              <Label className="block font-medium text-default-700">{t("discountType")}</Label>
               <Select 
                 value={formData.discountType}
                 onValueChange={(val) => handleChange("discountType", val)}
@@ -148,13 +149,13 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
                   <SelectValue placeholder="Select Type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="percentage">Percentage</SelectItem>
-                  <SelectItem value="fixed_amount">Fixed Amount</SelectItem>
+                  <SelectItem value="percentage">{t("percentage")}</SelectItem>
+                  <SelectItem value="fixed_amount">{t("fixed_amount")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="block font-medium text-default-700">Discount Value</Label>
+              <Label className="block font-medium text-default-700">{t("discountValue")}</Label>
               <Input 
                 type="number"
                 value={formData.discountValue}
@@ -168,7 +169,7 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
           {/* Min and Max Amount row */}
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2 relative">
-              <Label className="block font-medium text-default-700">Min Order Amount</Label>
+              <Label className="block font-medium text-default-700">{t("min_order_amount")}</Label>
               <div className="relative">
                 <Input 
                     type="number"
@@ -180,7 +181,7 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="block font-medium text-default-700">Max Discount Amount</Label>
+              <Label className="block font-medium text-default-700">{t("max_discount_amount")}</Label>
               <Input 
                 type="number"
                 value={formData.maximumDiscountAmount}
@@ -194,7 +195,7 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
           {/* Usage and Per User Limit row */}
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label className="block font-medium text-default-700">Total Usage Limit</Label>
+              <Label className="block font-medium text-default-700">{t("usage_limit")}</Label>
               <Input 
                 type="number"
                 value={formData.usageLimit}
@@ -204,7 +205,7 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
               />
             </div>
             <div className="space-y-2">
-              <Label className="block font-medium text-default-700">Per User Limit</Label>
+              <Label className="block font-medium text-default-700">{t("per_user_limit")}</Label>
               <Input 
                 type="number"
                 value={formData.perUserLimit}
@@ -218,7 +219,7 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
           {/* Dates row */}
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label className="block font-medium text-default-700">Start Date</Label>
+              <Label className="block font-medium text-default-700">{t("start_date")}</Label>
               <div className="relative">
                 <Input 
                   type="date"
@@ -230,7 +231,7 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="block font-medium text-default-700">End Date</Label>
+              <Label className="block font-medium text-default-700">{t("end_date")}</Label>
               <div className="relative">
                 <Input 
                   type="date"
@@ -246,7 +247,7 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
           {/* Status and Applicability row */}
           <div className="grid grid-cols-2 gap-6 items-center">
             <div className="flex items-center gap-3">
-                <Label className="text-default-700 font-medium">Is Active</Label>
+                <Label className="text-default-700 font-medium">{t("is_active")}</Label>
                 <Switch 
                     checked={formData.isActive}
                     onCheckedChange={(val) => handleChange("isActive", val)}
@@ -254,10 +255,10 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
                 />
             </div>
             <div className="space-y-2">
-                <Label className="block font-medium text-default-700 text-xs">Applicability (Type | ID)</Label>
+                <Label className="block font-medium text-default-700 text-xs">{t("applicability")}</Label>
                 <div className="flex gap-2">
-                    <Input placeholder="Type" className="h-10 text-xs" />
-                    <Input placeholder="ID" className="h-10 text-xs" />
+                    <Input placeholder={t("type")} className="h-10 text-xs" />
+                    <Input placeholder={t("id")} className="h-10 text-xs" />
                 </div>
             </div>
           </div>
@@ -269,7 +270,7 @@ export function AddCouponDialog({ open, onOpenChange, onSuccess }: AddCouponDial
                 onClick={handleSubmit}
                 disabled={loading}
             >
-                {loading ? <Loader2 className="animate-spin" size={20} /> : "Send"}
+                {loading ? <Loader2 className="animate-spin" size={20} /> : t("Send")}
             </Button>
             {/* <Button 
                 variant="outline"

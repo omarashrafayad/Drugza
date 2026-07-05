@@ -3,12 +3,15 @@ import { Button } from "@/components/ui/button";
 import { FileSpreadsheet, AlertTriangle, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
 import addProductsByExcel from "@/services/products/csv/addProductByExcel";
+import { useLocale, useTranslations } from "next-intl";
 
 interface ExcelUploadButtonProps {
   onSuccess?: () => void;
 }
 
 const ExcelUploadButton: React.FC<ExcelUploadButtonProps> = ({ onSuccess }) => {
+  const locale = useLocale();
+  const t = useTranslations("productList");
   const { loading, addProductsByExcel: uploadProducts } = addProductsByExcel();
 
   const handleFileUpload = async (file: File) => {
@@ -103,12 +106,12 @@ const ExcelUploadButton: React.FC<ExcelUploadButtonProps> = ({ onSuccess }) => {
         {loading ? (
           <>
             <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-            Importing...
+            {t("Importing...")}
           </>
         ) : (
           <>
             <FileSpreadsheet className="w-4 h-4" />
-            Import from Excel
+            {t("ImportfromExcel")}
           </>
         )}
       </Button>

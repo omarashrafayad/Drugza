@@ -12,11 +12,13 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import useGettingCouponById from "@/services/coupons/gettingCouponById";
 import useUpdateCoupon from "@/services/coupons/updateCoupon";
+import { useTranslations } from "next-intl";
 
 const EditCoupon = () => {
   const router = useRouter();
   const params = useParams();
   const id = params?.id as string;
+  const t = useTranslations("EditCoupon");
 
   const { coupon, getCouponById, loading: gettingCouponLoading } = useGettingCouponById();
   const { updateCoupon, loading: updatingCouponLoading } = useUpdateCoupon();
@@ -92,7 +94,7 @@ const EditCoupon = () => {
       <div className="col-span-12 space-y-4">
         <Card>
           <CardHeader className="border-b border-default-200 mb-6">
-            <CardTitle>Edit Coupon</CardTitle>
+            <CardTitle>{t("EditCoupon")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {gettingCouponLoading ? (
@@ -104,11 +106,11 @@ const EditCoupon = () => {
                 {/* Read-only Context */}
                 <div className="grid grid-cols-2 gap-4 pb-4 border-b border-dashed border-default-200">
                     <div className="space-y-1">
-                        <Label className="text-xs text-default-500">Coupon Code</Label>
+                        <Label className="text-xs text-default-500">{t("CouponCode")}</Label>
                         <div className="font-bold">{code}</div>
                     </div>
                     <div className="space-y-1">
-                        <Label className="text-xs text-default-500">Discount</Label>
+                        <Label className="text-xs text-default-500">{t("Discount")}</Label>
                         <div className="font-bold">{discountValue} ({discountType})</div>
                     </div>
                 </div>
@@ -116,10 +118,10 @@ const EditCoupon = () => {
                 {/* Editable Fields */}
                 <div className="space-y-4 pt-4">
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="description">Description</Label>
+                        <Label htmlFor="description">{t("Description")}</Label>
                         <Textarea
                             id="description"
-                            placeholder="Enter description"
+                            placeholder={t("Entercoupondescription")}
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                         />
@@ -127,7 +129,7 @@ const EditCoupon = () => {
 
                     <div className="grid grid-cols-2 gap-4">
                         <div className="flex flex-col gap-2">
-                            <Label htmlFor="startDate">Start Date</Label>
+                            <Label htmlFor="startDate">{t("StartDate")}</Label>
                             <Input
                                 id="startDate"
                                 type="date"
@@ -136,7 +138,7 @@ const EditCoupon = () => {
                             />
                         </div>
                         <div className="flex flex-col gap-2">
-                            <Label htmlFor="endDate">End Date</Label>
+                            <Label htmlFor="endDate">{t("EndDate")}</Label>
                             <Input
                                 id="endDate"
                                 type="date"
@@ -147,7 +149,7 @@ const EditCoupon = () => {
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="usageLimit">Total Usage Limit</Label>
+                        <Label htmlFor="usageLimit">{t("TotalUsageLimit")}</Label>
                         <Input
                             id="usageLimit"
                             type="number"
@@ -158,7 +160,7 @@ const EditCoupon = () => {
                     </div>
 
                     <div className="flex items-center gap-3 pt-2">
-                        <Label htmlFor="isActive" className="cursor-pointer">Is Active</Label>
+                        <Label htmlFor="isActive" className="cursor-pointer">{t("IsActive")}</Label>
                         <Input
                             id="isActive"
                             type="checkbox"
@@ -180,7 +182,7 @@ const EditCoupon = () => {
             onClick={onSubmit}
             className="w-32 h-12"
         >
-          {updatingCouponLoading ? <Loader2 className="animate-spin" size={20} /> : "Update"}
+          {updatingCouponLoading ? <Loader2 className="animate-spin" size={20} /> : t("Update")}
         </Button>
       </div>
     </div>

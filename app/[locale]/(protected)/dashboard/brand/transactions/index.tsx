@@ -85,7 +85,7 @@ const BrandsTable = () => {
         <div className="w-full">
             <div className="flex flex-col sm:flex-row justify-between items-center py-4 px-6 border-b border-solid border-default-200 gap-4">
                 <div className="w-full sm:w-auto flex-1">
-                    <SearchInput data={data ?? []} setFilteredData={setFilteredBrands} filterKey={"name"} placeholder="Search brands..." />
+                    <SearchInput data={data ?? []} setFilteredData={setFilteredBrands} filterKey={"name"} placeholder={t("search_brands")} />
                 </div>
                 <div className="flex items-center gap-4">
                     <Link href="/dashboard/add-brand">

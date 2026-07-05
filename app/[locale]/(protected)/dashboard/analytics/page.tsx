@@ -33,6 +33,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const DashboardPage = () => {
   const t = useTranslations("AnalyticsDashboard");
+  
 
   const {
     loading: loadingSummaryReports,
@@ -132,11 +133,11 @@ const DashboardPage = () => {
 
   const revenueSeries = [
     {
-      name: "Total Orders",
+      name: t("TotalOrders"),
       data: monthlySummary.map((item) => item.totalOrders),
     },
     {
-      name: "Total Sales",
+      name: t("TotalSales"),
       data: monthlySummary.map((item) => item.totalSales),
     },
   ];
@@ -158,7 +159,7 @@ const DashboardPage = () => {
                 <Card>
                   <CardHeader className="flex flex-row justify-between space-x-1">
                     <CardTitle className="text-lg font-semibold text-default-900">
-                      {"Weekly Overview"}
+                      {t("WeeklyOverview")}
                     </CardTitle>
                     {startDate && endDate && (
                       <div className="text-sm text-default-500 font-normal">
@@ -170,7 +171,7 @@ const DashboardPage = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                       <Link className="cursor-pointer transition-transform hover:scale-[1.02]" href="/dashboard/order-list">
                       <StatisticsBlock
-                          title={"Total Orders"}
+                          title={t("TotalOrders")}
                           total={(regionSummary?.totalOrders ?? summaryReports?.totalOrders) ?? "--"}
                           className="bg-info/10 border-none shadow-none"
                       />
@@ -183,14 +184,14 @@ const DashboardPage = () => {
                         }}
                       >
                         <StatisticsBlock
-                            title={"New Orders"}
+                            title={t("NewOrders")}
                             total={(regionSummary?.totalRecentOrders ?? summaryReports?.totalRecentOrders) ?? "--"}
                             className="bg-warning/10 border-none shadow-none"
                         />
                       </div>
                       <Link className="cursor-pointer transition-transform hover:scale-[1.02]" href="/dashboard/reports/invoices">
                       <StatisticsBlock
-                          title={"Total Invoices"}
+                          title={t("TotalInvoices")}
                           total={(regionSummary?.totalInvoices ?? summaryReports?.totalInvoices) ?? "--"}
                           className="bg-primary/10 border-none shadow-none"
                       />
@@ -203,7 +204,7 @@ const DashboardPage = () => {
                         }}
                       >
                         <StatisticsBlock
-                            title={"Total Recent Users"}
+                            title={t("TotalRecentUsers")}
                             total={totalRecentUser}
                             className="bg-destructive/10 border-none shadow-none"
                         />
@@ -216,7 +217,7 @@ const DashboardPage = () => {
                         }}
                       >
                         <StatisticsBlock
-                            title={"Total Active Users"}
+                            title={t("TotalActiveUsers")}
                             total={totalActiveUsers}
                             className="bg-success/10 border-none shadow-none"
                         />
@@ -229,7 +230,7 @@ const DashboardPage = () => {
                         }}
                       >
                         <StatisticsBlock
-                            title={"Total Inactive Users"}
+                            title={t("TotalInactiveUsers")}
                             total={totalInactiveUsers}
                             className="bg-destructive/10 border-none shadow-none"
                         />
@@ -308,7 +309,7 @@ const DashboardPage = () => {
           <div className="lg:col-span-8 col-span-12">
             <Card>
               <CardHeader className="flex flex-row items-center">
-                <CardTitle className="flex-1">Sales Review</CardTitle>
+                <CardTitle className="flex-1">{t("SalesReview")}</CardTitle>
                 {startDate && endDate && (
                   <div className="text-sm text-default-500 font-normal">
                     {`${startDate.toLocaleDateString()} — ${endDate.toLocaleDateString()}`}

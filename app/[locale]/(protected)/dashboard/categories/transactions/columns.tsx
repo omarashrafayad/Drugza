@@ -43,7 +43,7 @@ export const baseColumns = ({ refresh, t }: { refresh: () => void, t: (key: stri
   // },
   {
     accessorKey: "categoryImageUrl",
-    header: "Image",
+    header: t("Image"),
     cell: ({ row }) => {
       const imageUrl = row.getValue("imageUrl") as string;
       return (

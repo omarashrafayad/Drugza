@@ -107,7 +107,7 @@ export const baseColumns = ({ refresh, t }: { refresh: () => void; t: (key: stri
     },
     {
         accessorKey: "sectionNum",
-        header: "Section Num",
+        header: t("sectionNum"),
         cell: ({ row }) => {
             const sectionNum = row.getValue("sectionNum") as number;
             return (

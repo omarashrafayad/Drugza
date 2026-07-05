@@ -204,7 +204,7 @@ const TransactionsTable = () => {
             </Select>
 
             <Input
-              placeholder="Search product..."
+              placeholder={t("searchProduct")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="max-w-sm"
@@ -218,10 +218,10 @@ const TransactionsTable = () => {
                 className="gap-2"
               >
                 {downloadLoading ? <Loader2 className="h-8 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
-                Export Prices
+                {t("ExportPrices")}
               </Button>
               <CSVUploadModal
-                label="Import Prices"
+                label={t("ImportPrices")}
                 onUpload={async (file: File) => {
                   await importPriceCsv(file, selectedUserId ?? undefined);
                   handleRefresh();
@@ -245,7 +245,7 @@ const TransactionsTable = () => {
                 className="gap-2"
               >
                 {downloadLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
-                Export Prices
+                {t("ExportPrices")}
               </Button>
               <Button 
                 variant="outline" 
@@ -254,10 +254,10 @@ const TransactionsTable = () => {
                 className="gap-2"
               >
                 {downloadLatestLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
-                Export Latest Prices
+                {t("ExportLatestPrices")}
               </Button>
               <CSVUploadModal
-                label="Import Prices"
+                label={t("ImportPrices")}
                 onUpload={async (file: File) => {
                   await importPriceCsv(file);
                   handleRefresh();
