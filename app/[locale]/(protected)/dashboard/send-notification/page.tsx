@@ -23,6 +23,7 @@ const SendNotificationPage = () => {
   const [recipientType, setRecipientType] = useState<string>("all_doctors");
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
   const [title, setTitle] = useState<string>("");
+  const [roleId, setRoleId] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [expiryDate, setExpiryDate] = useState<Date | undefined>(new Date());
 
@@ -55,6 +56,11 @@ const SendNotificationPage = () => {
       return;
     }
 
+    if (!roleId) {
+      toast.error("Please select a role");
+      return;
+    }
+
     let recipientTypeValue = RecipientType.Specific;
     if (recipientType === "all_doctors") recipientTypeValue = RecipientType.AllDoctors;
     else if (recipientType === "all_providers") recipientTypeValue = RecipientType.AllProviders;
@@ -63,6 +69,7 @@ const SendNotificationPage = () => {
       recipientType: recipientTypeValue,
       userIds: recipientType.startsWith("specific") ? selectedUserIds : [],
       title,
+      roleId,
       message,
       expired: expiryDate.toISOString(),
     };
@@ -74,6 +81,7 @@ const SendNotificationPage = () => {
       setTitle("");
       setMessage("");
       setSelectedUserIds([]);
+      setRoleId("");
       setExpiryDate(new Date());
       setRecipientType("all_doctors");
     } else {
@@ -177,6 +185,16 @@ const SendNotificationPage = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Role</Label>
+           <Input
+           id="roleId"
+           placeholder="Enter role ID..."
+           value={roleId}
+           onChange={(e) => setRoleId(e.target.value)}
+           />
           </div>
 
           <div className="space-y-2">

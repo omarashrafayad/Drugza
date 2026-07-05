@@ -6,6 +6,7 @@ export type SubChildren = {
   active: boolean;
   children?: SubChildren[];
   permission?: string;
+  icon?: string;
 };
 
 export type Submenu = {
@@ -66,7 +67,7 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               href: "/dashboard/analytics",
               label: t("analytics"),
               active: pathname === "/dashboard/analytics",
-              icon: "",
+              icon: "heroicons-outline:chart-bar",
               children: [],
               // permission: "Permissions.Report.View",
             },
@@ -75,7 +76,7 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               label: t("orders"),
               active: pathname === "/dashboard/order-list",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:shopping-bag",
               // permission: "Permissions.Order.View",
             },
             {
@@ -83,7 +84,7 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               label: t("returns"),
               active: pathname === "/dashboard/return-list",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:arrow-path",
               // permission: "Permissions.ReturnOrder.View",
             },
             {
@@ -91,7 +92,7 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               label: t("categories"),
               active: pathname === "/dashboard/categories",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:tag",
               // permission: "Permissions.Category.View",
             },
             {
@@ -99,7 +100,7 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               label: t("subcategories"),
               active: pathname === "/dashboard/subcategories",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:squares-2x2",
               // permission: "Permissions.SubCategory.View",
             },
             {
@@ -107,7 +108,7 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               label: t("brands"),
               active: pathname === "/dashboard/brand",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:bookmark",
               // permission: "Permissions.Brand.View",
             },
             {
@@ -115,7 +116,7 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               label: t("units"),
               active: pathname === "/dashboard/units",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:variable",
               // permission: "Permissions.Unit.View",
             },
             {
@@ -123,7 +124,7 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               label: t("productUnits"),
               active: pathname === "/dashboard/product-units",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:circle-stack",
               // permission: "Permissions.ProductUnit.View",
             },
             {
@@ -131,7 +132,7 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               label: t("stockProducts"),
               active: pathname === "/dashboard/stock-products",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:archive-box",
               // permission: "Permissions.StockProduct.View",
             },
             {
@@ -145,12 +146,14 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
                         href: "/dashboard/banners",
                         label: t("banners"),
                         active: pathname === "/dashboard/banners",
+                        icon: "heroicons-outline:photo",
                         // permission: "Permissions.Banner.View",
                     },
                     {
                         href: "/dashboard/special-offers",
                         label: t("specialOffers"),
                         active: pathname === "/dashboard/special-offers",
+                        icon: "heroicons-outline:gift",
                         // permission: "Permissions.SpecialOffer.View",
                     }
                 ],
@@ -160,23 +163,15 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
                 label: t("coupons"),
                 active: pathname === "/dashboard/coupons",
                 children: [],
-                icon: "",
+                icon: "heroicons-outline:ticket",
                 // permission: "Permissions.Coupon.View",
             },
-            // {
-            //     href: "/dashboard/delivery-times",
-            //     label: t("delivery-times"),
-            //     active: pathname === "/dashboard/delivery-times",
-            //     children: [],
-            //     icon: "",
-            //     // permission: "Permissions.DeliveryTimeSlot.View",
-            // },
             {
               href: "/dashboard/product-list",
               label: t("products"),
               active: pathname === "/dashboard/product-list",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:cube",
               // permission: "Permissions.Product.View",
             },
              {
@@ -184,7 +179,7 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               label: t("price-management"),
               active: pathname === "/dashboard/inventory-management",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:banknotes",
               // permission: "Permissions.ProductPrice.View",
             },
             {
@@ -192,14 +187,14 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               label: t("edit-user"),
               active: pathname.startsWith(`/dashboard/edit-user/`),
               children: [],
-              icon: "",
+              icon: "heroicons-outline:pencil-square",
               // permission: "Permissions.User.Edit",
             },
              {
               href: "/dashboard/register",
               label: t("register"),
               active: pathname === "/dashboard/register",
-              icon: "",
+              icon: "heroicons-outline:user-plus",
               children: [],
               // permission: "Permissions.User.Create",
             },
@@ -208,54 +203,50 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               label: t("User Management"),
               active: pathname === "/dashboard/user-rules",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:users",
               // permission: "Permissions.User.View",
             },
-            // {
-            //   href: "/dashboard/doctors",
-            //   label: t("Doctors"),
-            //   active: pathname === "/dashboard/doctors",
-            //   children: [],
-            //   icon: "",
-            //   // permission: "Permissions.User.View",
-            // },
             {
               href: "/dashboard/roles",
               label: t("Roles"), 
               active: pathname === "/dashboard/roles" || pathname.startsWith("/dashboard/edit-role") || pathname === "/dashboard/add-role",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:shield-check",
               // permission: "Permissions.Role.View",
             },
             {
               href: "/dashboard/reports",
               label: t("Reports"),
               active: pathname === "/dashboard/reports" || pathname.startsWith("/dashboard/reports/"),
-              icon: "",
+              icon: "heroicons-outline:document-chart-bar",
               // permission: "Permissions.Order.View",
               children: [
                 {
                   href: "/dashboard/reports/orders",
                   label: t("orders"),
                   active: pathname === "/dashboard/reports/orders",
+                  icon: "heroicons-outline:shopping-cart",
                   // permission: "Permissions.Order.Vieww",
                 },
                 {
                   href: "/dashboard/reports/invoices",
                   label: t("invoices"),
                   active: pathname === "/dashboard/reports/invoices",
+                  icon: "heroicons-outline:receipt-percent",
                   // permission: "Permissions.Invoice.View",
                 },
                 {
                   href: "/dashboard/reports/balance",
                   label: t("balance"),
                   active: pathname === "/dashboard/reports/balance",
+                  icon: "heroicons-outline:credit-card",
                   // permission: "Permissions.BalanceReport.View",
                 },
                 {
                   href: "/dashboard/reports/summary",
                   label: t("summary"),
                   active: pathname === "/dashboard/reports/summary",
+                  icon: "heroicons-outline:presentation-chart-line",
                   // permission: "Permissions.Report.View",
                 }
               ],
@@ -271,12 +262,14 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
                   href: "/dashboard/send-notification",
                   label: t("send-notification"),
                   active: pathname === "/dashboard/send-notification",
+                  icon: "heroicons-outline:paper-airplane",
                   // permission: "Permissions.Notification.View",
                 },
                 {
                   href: "/dashboard/notifications-list",
                   label: t("view-notifications"),
                   active: pathname === "/dashboard/notifications-list",
+                  icon: "heroicons-outline:chat-bubble-bottom-center-text",
                   // permission: "Permissions.Notification.View",
                 },
               ],
@@ -289,37 +282,42 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
                       pathname.startsWith("/dashboard/area") || 
                       pathname.startsWith("/dashboard/zone") || 
                       pathname.startsWith("/dashboard/area-zone"),
-              icon: "",
+              icon: "heroicons-outline:map-pin",
               permission: "",
               children: [
                 {
                   href: "/dashboard/country",
                   label: t("country"),
                   active: pathname === "/dashboard/country",
+                  icon: "heroicons-outline:globe-alt",
                   // permission: "Permissions.Country.View",
                 },
                 {
                   href: "/dashboard/city",
                   label: t("city"),
                   active: pathname === "/dashboard/city",
+                  icon: "heroicons-outline:building-office-2",
                   // permission: "Permissions.City.View",
                 },
                 {
                   href: "/dashboard/area",
                   label: t("area"),
                   active: pathname === "/dashboard/area",
+                  icon: "heroicons-outline:map",
                   // permission: "Permissions.Area.View",
                 },
                 {
                   href: "/dashboard/zone",
                   label: t("zone"),
                   active: pathname === "/dashboard/zone",
+                  icon: "heroicons-outline:flag",
                   // permission: "Permissions.Zone.View",
                 },
                 {
                   href: "/dashboard/area-zone",
                   label: t("areaZone"),
                   active: pathname === "/dashboard/area-zone",
+                  icon: "heroicons-outline:map-pin",
                   // permission: "Permissions.AreaZone.View",
                 },
               ],
@@ -328,25 +326,28 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               href: "/dashboard/policy",
               label: t("policy"),
               active: pathname.startsWith("/dashboard/policy"),
-              icon: "",
+              icon: "heroicons-outline:document-text",
               permission: "",
               children: [
                 {
                   href: "/dashboard/policy",
                   label: t("policy"),
                   active: pathname === "/dashboard/policy",
+                  icon: "heroicons-outline:shield-check",
                   // permission: "Permissions.Policy.View",
                 },
                 {
                   href: "/dashboard/policy/refund-policy",
                   label: t("refund_policy"),
                   active: pathname === "/dashboard/policy/refund-policy",
+                  icon: "heroicons-outline:arrow-path",
                   // permission: "Permissions.RefundPolicy.View",
                 },
                 {
                   href: "/dashboard/policy/terms-and-conditions",
                   label: t("terms_and_conditions"),
                   active: pathname === "/dashboard/policy/terms-and-conditions",
+                  icon: "heroicons-outline:document-check",
                   // permission: "Permissions.TermsAndConditions.View",
                 },
               ],
@@ -356,7 +357,7 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               label: t("settings"),
               active: pathname === "/dashboard/settings",
               children: [],
-              icon: "",
+              icon: "heroicons-outline:cog-6-tooth",
               // permission: "Permissions.User.View",
             },
           ],
