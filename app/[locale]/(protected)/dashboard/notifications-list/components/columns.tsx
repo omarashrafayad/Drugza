@@ -214,7 +214,7 @@ const MessageCell = ({ message, t }: { message: string; t: (key: string) => stri
 export const baseColumns = ({ refresh, t }: { refresh: () => void; t: (key: string) => string }): ColumnDef<TransformedNotificationItem>[] => [
     {
         accessorKey: "groupName",
-        header: "group",
+        header: t("group"),
         cell: ({ row }) => {
             const groupName = row.getValue("groupName") as string;
             const displayGroup = groupName === "Specific" ? (t("specific") || "Specific") : (t("allDoctors") || "All Doctors");
@@ -232,7 +232,7 @@ export const baseColumns = ({ refresh, t }: { refresh: () => void; t: (key: stri
     },
     {
         accessorKey: "users",
-        header: "recipients",
+        header: t("recipients"),
         cell: ({ row }) => {
             const users = row.original.users || [];
             if (users.length === 1) {

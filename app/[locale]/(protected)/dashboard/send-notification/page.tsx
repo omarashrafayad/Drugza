@@ -183,28 +183,27 @@ const SendNotificationPage = () => {
             <Label htmlFor="title">{t("Title")}</Label>
             <Input
               id="title"
-              placeholder={t("Enter_notification_title...")}
+              placeholder={t("Enter_notification_title")}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="message">{t("Message")}</Label>
-            <Label>Role</Label>
+            <Label>{t("RoleID")}</Label>
            <Input
            id="roleId"
-           placeholder="Enter role ID..."
+           placeholder={t("Enter_role_ID")}
            value={roleId}
            onChange={(e) => setRoleId(e.target.value)}
            />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="message">Message</Label>
+            <Label htmlFor="message">{t("Message")}</Label>
             <Textarea
               id="message"
-              placeholder={t("Enter_your_message_here...")}
+              placeholder={t("Enter_your_message_here")}
               rows={5}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
