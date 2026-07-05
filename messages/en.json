@@ -1030,8 +1030,10 @@
     "brand_photo": "Brand Photo",
     "error_fetching_brand": "Error fetching brand data",
     "update_failed": "Update failed",
-    "save_changes": "Save Changes"
-    
+    "save_changes": "Save Changes",
+    "RoleName":"Role Name",
+    "Actions":"Actions",
+    "add_role":"Add Role"
   },
   "coupons": {
     "coupons": "Coupons",

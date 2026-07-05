@@ -14,13 +14,13 @@ export const baseColumns = ({ refresh, t, onAssignPermissions }: {
 }): ColumnDef<any>[] => [
     {
         accessorKey: "name",
-        header: "Role Name",
+        header: t("RoleName"),
         cell: ({ row }) => <span>{row.getValue("name") || "Unknown"}</span>,
     },
     {
         id: "actions",
         accessorKey: "action",
-        header: "Actions",
+        header: t("Actions"),
         enableHiding: false,
         cell: ({ row }) => {
             const id = row.original.id;

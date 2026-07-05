@@ -1032,8 +1032,10 @@
     "brand_name_required": "اسم العلامة التجارية مطلوب.",
     "brand_arabic_name_required": "اسم العلامة التجارية بالعربية مطلوب.",
     "brand_description_required": "وصف العلامة التجارية مطلوب.",
-    "brand_information": "معلومات العلامة التجارية"
-
+    "brand_information": "معلومات العلامة التجارية",
+    "RoleName":"اسم الدور",
+    "Actions":"الإجراءات",
+    "add_role":"إضافة دور"
   },
   "coupons": {
     "coupons": "الكوبونات",

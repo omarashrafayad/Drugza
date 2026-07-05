@@ -127,7 +127,7 @@ const RolesTable = () => {
                     <div className="flex items-center gap-4 flex-wrap">
                         <Link href="/dashboard/add-role">
                             <Button size={"md"} variant="outline">
-                                Add Role
+                                {t("add_role")}
                             </Button>
                         </Link>
                     </div>
