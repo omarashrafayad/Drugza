@@ -64,7 +64,7 @@ const SendNotificationPage = () => {
     let recipientTypeValue = RecipientType.Specific;
     if (recipientType === "all_doctors") recipientTypeValue = RecipientType.AllDoctors;
     else if (recipientType === "all_providers") recipientTypeValue = RecipientType.AllProviders;
-    
+
     const payload = {
       recipientType: recipientTypeValue,
       userIds: recipientType.startsWith("specific") ? selectedUserIds : [],
@@ -118,61 +118,60 @@ const SendNotificationPage = () => {
             <div className="space-y-2">
               <Label>Select {recipientType.includes("doctor") ? "Doctor" : "Provider"}</Label>
               <ReactSelect
-                  isMulti
+                isMulti
                 options={users?.map((user: UserType) => ({
                   value: user.id,
                   label: `${user.userName} (${user.email})`
                 })) || []}
-                onChange={(selected: MultiValue<{value: string, label: string}>) => {
+                onChange={(selected: MultiValue<{ value: string, label: string }>) => {
                   setSelectedUserIds(selected.map(item => item.value));
                 }}
                 placeholder={`Search ${recipientType.includes("doctor") ? "doctor" : "provider"}...`}
                 classNamePrefix="react-select"
                 classNames={{
-    control: () =>
-      `
+                  control: () =>
+                    `
       !bg-white dark:!bg-gray-900
       !border !border-gray-300 dark:!border-gray-700
       !shadow-none
       hover:!border-blue-500
       `,
 
-    menu: () =>
-      `
+                  menu: () =>
+                    `
       !bg-white dark:!bg-gray-900
       !border !border-gray-300 dark:!border-gray-700
       `,
 
-    option: ({ isFocused, isSelected }) =>
-      `
-      ${
-        isSelected
-          ? "!bg-blue-600 !text-white"
-          : isFocused
-          ? "!bg-gray-100 dark:!bg-gray-800"
-          : "!bg-white dark:!bg-gray-900"
-      }
+                  option: ({ isFocused, isSelected }) =>
+                    `
+      ${isSelected
+                      ? "!bg-blue-600 !text-white"
+                      : isFocused
+                        ? "!bg-gray-100 dark:!bg-gray-800"
+                        : "!bg-white dark:!bg-gray-900"
+                    }
       !text-black dark:!text-white
       `,
 
-    multiValue: () =>
-      `!bg-gray-200 dark:!bg-gray-800`,
+                  multiValue: () =>
+                    `!bg-gray-200 dark:!bg-gray-800`,
 
-    multiValueLabel: () =>
-      `!text-black dark:!text-white `,
+                  multiValueLabel: () =>
+                    `!text-black dark:!text-white `,
 
-    multiValueRemove: () =>
-      `!text-black dark:!text-white hover:!bg-red-600 hover:!text-white`,
+                  multiValueRemove: () =>
+                    `!text-black dark:!text-white hover:!bg-red-600 hover:!text-white`,
 
-    placeholder: () =>
-      `!text-gray-500 dark:!text-gray-400`,
+                  placeholder: () =>
+                    `!text-gray-500 dark:!text-gray-400`,
 
-    input: () =>
-      `!text-black dark:!text-white `,
+                  input: () =>
+                    `!text-black dark:!text-white `,
 
-    singleValue: () =>
-      ` !text-black dark:!text-white `,
-  }}
+                  singleValue: () =>
+                    ` !text-black dark:!text-white `,
+                }}
               />
             </div>
           )}
@@ -189,12 +188,12 @@ const SendNotificationPage = () => {
 
           <div className="space-y-2">
             <Label>Role</Label>
-           <Input
-           id="roleId"
-           placeholder="Enter role ID..."
-           value={roleId}
-           onChange={(e) => setRoleId(e.target.value)}
-           />
+            <Input
+              id="roleId"
+              placeholder="Enter role ID..."
+              value={roleId}
+              onChange={(e) => setRoleId(e.target.value)}
+            />
           </div>
 
           <div className="space-y-2">
