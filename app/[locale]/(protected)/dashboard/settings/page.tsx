@@ -10,9 +10,11 @@ import { useGetLimitOrder } from "@/services/Orders/getLimitOrder";
 import { useUpdateLimitOrder } from "@/services/Orders/updateLimitOrder";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 
 function Settings() {
+    const t = useTranslations("Settings");
     const { limit, getLimitOrder } = useGetLimitOrder();
     const { updateLimitOrder, loading: updatingLimit } = useUpdateLimitOrder();
     const [editableLimit, setEditableLimit] = useState("");
@@ -47,13 +49,13 @@ function Settings() {
         <div className="space-y-6">
             <Card>
                 <CardHeader className="border-b border-solid border-default-200 mb-6">
-                    <CardTitle>Notification Configuration</CardTitle>
+                    <CardTitle>{t("NotificationConfiguration")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="flex justify-between">
                         <div className="flex flex-col gap-3">
-                            <Label size={"lg"}>Email Notifications</Label>
-                            <Label>Receive emails for important updates</Label>
+                            <Label size={"lg"}>{t("EmailNotifications")}</Label>
+                            <Label>{t("Receiveemailsforimportantupdates")}</Label>
                         </div>
                         <div>
                             <Switch color="info" size={"lg"} />
@@ -61,8 +63,8 @@ function Settings() {
                     </div>
                     <div className="flex justify-between">
                         <div className="flex flex-col gap-3">
-                            <Label size={"lg"}>Order Notifications</Label>
-                            <Label>Receive notifications when new orders are placed</Label>
+                            <Label size={"lg"}>{t("OrderNotifications")}</Label>
+                            <Label>{t("Receive notifications when new orders are placed")}</Label>
                         </div>
                         <div>
                             <Switch color="info" size={"lg"} />
@@ -70,8 +72,8 @@ function Settings() {
                     </div>
                     <div className="flex justify-between">
                         <div className="flex flex-col gap-3">
-                            <Label size={"lg"}>Inventory Alerts</Label>
-                            <Label>Get notified when products are low in stock</Label>
+                            <Label size={"lg"}>{t("InventoryAlerts")}</Label>
+                            <Label>{t("Get_notified_when_products_are_low_in_stock")}</Label>
                         </div>
                         <div>
                             <Switch color="info" size={"lg"} />
@@ -79,8 +81,8 @@ function Settings() {
                     </div>
                     <div className="flex justify-between">
                         <div className="flex flex-col gap-3">
-                            <Label size={"lg"}>Promotional Emails</Label>
-                            <Label>Receive marketing and promotional emails</Label>
+                            <Label size={"lg"}>{t("PromotionalEmails")}</Label>
+                            <Label>{t("Receive_marketing_and_promotional_emails")}</Label>
                         </div>
                         <div>
                             <Switch color="info" size={"lg"} />
@@ -91,13 +93,13 @@ function Settings() {
 
             <Card>
                 <CardHeader className="border-b border-solid border-default-200 mb-6">
-                    <CardTitle>Order Configuration</CardTitle>
+                    <CardTitle>{t("OrderConfiguration")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="flex justify-between items-center">
                         <div className="flex flex-col gap-3">
-                            <Label size={"lg"}>Minimum Order Price</Label>
-                            <Label>Set the minimum price required for an order</Label>
+                            <Label size={"lg"}>{t("MinimumOrderPrice")}</Label>
+                            <Label>{t("Set_the_minimum_price_required_for_an_order")}</Label>
                         </div>
                         <div className="flex items-center gap-2 border border-default-200 rounded-md p-1 px-3">
                             <Input
@@ -111,7 +113,7 @@ function Settings() {
                                 onClick={handleUpdateLimit}
                                 disabled={updatingLimit || !!(limit && editableLimit === limit.minimumOrder.toString())}
                             >
-                                {updatingLimit ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save"}
+                                {updatingLimit ? <Loader2 className="w-4 h-4 animate-spin" /> : t("Save")}
                             </Button>
                         </div>
                     </div>

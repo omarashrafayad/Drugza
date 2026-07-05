@@ -1163,7 +1163,11 @@
     "unknown": "Unknown",
     "actions": "Actions",
     "select_country": "Select Country",
-    "search_country": "Search Country..."
+    "search_country": "Search Country...",
+    "id": "ID",
+    "country_name": "Country Name",
+    "search_placeholder": "Search by ID...",
+    "no_results": "No cities found."
   },
   "areas": {
     "areas": "Areas",
@@ -1393,5 +1397,20 @@
     "select_user_type": "Select User Type",
     "Addresses": "Addresses",
     "address_line": "Address Line"
+  },
+  "Settings": {
+    "NotificationConfiguration": "Notification Configuration",
+    "EmailNotifications": "Email Notifications",
+    "Receiveemailsforimportantupdates": "Receive emails for important updates",
+    "OrderNotifications": "Order Notifications",
+    "Receive notifications when new orders are placed": "Receive notifications when new orders are placed",
+    "InventoryAlerts": "Inventory Alerts",
+    "Get_notified_when_products_are_low_in_stock": "Get notified when products are low in stock",
+    "PromotionalEmails": "Promotional Emails",
+    "Receive_marketing_and_promotional_emails": "Receive marketing and promotional emails",
+    "OrderConfiguration": "Order Configuration",
+    "MinimumOrderPrice": "Minimum Order Price",
+    "Set_the_minimum_price_required_for_an_order": "Set the minimum price required for an order",
+    "Save": "Save"
   }
 }

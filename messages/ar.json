@@ -1157,7 +1157,11 @@
     "unknown": "غير معروف",
     "actions": "الإجراءات",
     "select_country": "اختر الدولة",
-    "search_country": "ابحث عن الدولة..."
+    "search_country": "ابحث عن الدولة...",
+    "id": "المعرف",
+    "country_name": "اسم الدولة",
+    "search_placeholder": "البحث بالمعرف...",
+    "no_results": "لا توجد مدن."
   },
   "areas": {
     "areas": "المناطق",
@@ -1388,5 +1392,20 @@
     "select_user_type": "اختر نوع المستخدم",
     "Addresses": "العناوين",
     "address_line": "سطر العنوان"
+  },
+  "Settings": {
+    "NotificationConfiguration": "إعدادات الإشعارات",
+    "EmailNotifications": "إشعارات البريد الإلكتروني",
+    "Receiveemailsforimportantupdates": "تلقي رسائل البريد الإلكتروني للتحديثات الهامة",
+    "OrderNotifications": "إشعارات الطلبات",
+    "Receive notifications when new orders are placed": "تلقي الإشعارات عند تقديم طلبات جديدة",
+    "InventoryAlerts": "تنبيهات المخزون",
+    "Get_notified_when_products_are_low_in_stock": "احصل على إشعارات عند انخفاض مخزون المنتجات",
+    "PromotionalEmails": "رسائل بريد إلكتروني ترويجية",
+    "Receive_marketing_and_promotional_emails": "تلقي رسائل تسويقية وترويجية",
+    "OrderConfiguration": "إعدادات الطلب",
+    "MinimumOrderPrice": "الحد الأدنى لسعر الطلب",
+    "Set_the_minimum_price_required_for_an_order": "حدد الحد الأدنى للسعر المطلوب للطلب",
+    "Save": "حفظ"
   }
 }

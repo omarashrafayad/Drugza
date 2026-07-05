@@ -18,8 +18,10 @@ import useSendNotification, { RecipientType } from "@/services/notifications/sen
 import { toast } from "sonner";
 import { UserType } from "@/types/users";
 import ReactSelect, { MultiValue } from "react-select";
+import { useTranslations } from "next-intl";
 
 const SendNotificationPage = () => {
+  const t = useTranslations("NotificationsList");
   const [recipientType, setRecipientType] = useState<string>("all_doctors");
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
   const [title, setTitle] = useState<string>("");
@@ -85,30 +87,30 @@ const SendNotificationPage = () => {
     <div className="max-w-3xl mx-auto py-8">
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Send Notification</CardTitle>
+          <CardTitle className="text-2xl font-bold">{t("SendNotification")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">
-            <Label>Recipient Type</Label>
+            <Label>{t("RecipientType")}</Label>
             <Select value={recipientType} onValueChange={(val) => {
               setRecipientType(val);
               setSelectedUserIds([]);
             }}>
               <SelectTrigger>
-                <SelectValue placeholder="Select who to send to" />
+                <SelectValue placeholder={t("Select_Who_To_Send_To")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all_doctors">All Doctors</SelectItem>
-                <SelectItem value="all_providers">All Providers</SelectItem>
-                <SelectItem value="specific_doctor">Specific Doctor</SelectItem>
-                <SelectItem value="specific_provider">Specific Provider</SelectItem>
+                <SelectItem value="all_doctors">{t("AllDoctors")}</SelectItem>
+                <SelectItem value="all_providers">{t("AllProviders")}</SelectItem>
+                <SelectItem value="specific_doctor">{t("SpecificDoctor")}</SelectItem>
+                <SelectItem value="specific_provider">{t("SpecificProvider")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           {recipientType.startsWith("specific") && (
             <div className="space-y-2">
-              <Label>Select {recipientType.includes("doctor") ? "Doctor" : "Provider"}</Label>
+              <Label>{t("Select")}{t(recipientType.includes("doctor") ? "Doctor" : "Provider")}</Label>
               <ReactSelect
                   isMulti
                 options={users?.map((user: UserType) => ({
@@ -118,7 +120,7 @@ const SendNotificationPage = () => {
                 onChange={(selected: MultiValue<{value: string, label: string}>) => {
                   setSelectedUserIds(selected.map(item => item.value));
                 }}
-                placeholder={`Search ${recipientType.includes("doctor") ? "doctor" : "provider"}...`}
+                placeholder={`${t("Search")}${t(recipientType.includes("doctor") ? "Doctor" : "Provider")}...`}
                 classNamePrefix="react-select"
                 classNames={{
     control: () =>
@@ -170,20 +172,20 @@ const SendNotificationPage = () => {
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="title">Title</Label>
+            <Label htmlFor="title">{t("Title")}</Label>
             <Input
               id="title"
-              placeholder="Enter notification title..."
+              placeholder={t("Enter_notification_title...")}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="message">Message</Label>
+            <Label htmlFor="message">{t("Message")}</Label>
             <Textarea
               id="message"
-              placeholder="Enter your message here..."
+              placeholder={t("Enter_your_message_here...")}
               rows={5}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -191,7 +193,7 @@ const SendNotificationPage = () => {
           </div>
 
           <div className="space-y-2">
-            <Label>Expiry Date</Label>
+            <Label>{t("ExpiryDate")}</Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -201,7 +203,7 @@ const SendNotificationPage = () => {
                     !expiryDate && "text-muted-foreground"
                   )}
                 >
-                  {expiryDate ? format(expiryDate, "PPP") : <span>Pick a date</span>}
+                  {expiryDate ? format(expiryDate, "PPP") : <>{t("Pick_a_date")}</>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -214,7 +216,7 @@ const SendNotificationPage = () => {
                 />
               </PopoverContent>
             </Popover>
-            <p className="text-xs text-muted-foreground">The notification will disappear for the user after this date.</p>
+            <p className="text-xs text-muted-foreground">{t("The_notification_will_disappear_for_the_user_after_this_date")}</p>
           </div>
 
           <div className="pt-4">
@@ -222,12 +224,12 @@ const SendNotificationPage = () => {
               {sending ? (
                 <>
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Sending...
+                  {t("Sending...")}
                 </>
               ) : (
                 <>
                   <Send className="mr-2 h-5 w-5" />
-                  Send Notification
+                  {t("SendNotification")}
                 </>
               )}
             </Button>
