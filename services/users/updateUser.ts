@@ -8,7 +8,7 @@ function useUpdateUser() {
     const updateUser = async (user: any, id: string | string[] | undefined): Promise<{ success: boolean; error?: string }> => {
         setLoading(true);
         try {
-            const response = await AxiosInstance.put(`/api/Users/${id}`, user);
+            const response = await AxiosInstance.put(`/api/Auth/users/${id}`, user);
             if (response.status !== 200) {
                 throw new Error('Failed to update user');
             }

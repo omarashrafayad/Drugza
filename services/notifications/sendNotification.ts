@@ -24,7 +24,7 @@ function useSendNotification() {
     setError(null);
 
     try {
-      const response = await AxiosInstance.post(`/api/Notifacations/send-notifcation`, payload);
+      const response = await AxiosInstance.post(`/api/Notifications/send-notification`, payload);
       
       if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
         throw new Error(response.data?.message || "Failed to send notification");
