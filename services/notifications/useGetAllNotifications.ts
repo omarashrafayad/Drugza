@@ -21,7 +21,7 @@ function useGetAllNotifications() {
     setLoading(true);
     setError(null);
     try {
-      const response = await AxiosInstance.get<NotificationItem[]>(`/api/Notifacations/Get-All-Notifications`);
+      const response = await AxiosInstance.get<NotificationItem[]>(`/api/Notifications/Get-All-Notifications`);
       if (response.status === 200) {
         setData(response.data);
       } else {

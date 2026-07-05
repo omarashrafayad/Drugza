@@ -7,16 +7,16 @@ function useGettingUserById() {
     const [error, setError] = useState<string | null>(null);
     const [user, setUser] = useState<UserType | null>(null);
 
-    const getUserById = async (id: string | string[] | undefined) => {
+    const getUserById = async (userId: string | string[] | undefined) => {
         // التحقق من وجود ID لتجنب طلبات خاطئة
-        if (!id) return;
+        if (!userId) return;
 
         setLoading(true);
         setError(null);
 
         try {
             // التعديل: تغيير المسار ليكون /{id} بدلاً من ?userid={id}
-            const response = await AxiosInstance.get(`/api/Users/user/${id}`);
+            const response = await AxiosInstance.get(`/api/Auth/users/${userId}`);
 
             if (response.status === 200) {
                 setUser(response.data);

@@ -50,7 +50,7 @@ export function MenuClassic({ }) {
     if (loading) {
         return (
             <div className="w-full h-screen flex items-center justify-center">
-                <Loader2 className="text-blue-500 animate-spin w-6 h-6" />
+                <Loader2 className="text-[#ff793b] animate-spin w-6 h-6" />
             </div>
         );
     }
