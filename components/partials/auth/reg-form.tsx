@@ -26,9 +26,11 @@ import useGetAllRoles from "@/services/roles/getAllRoles";
 import { useTranslations } from "next-intl";
 
 type Inputs = {
-    FullName: string;
+    FirstName: string;
+    LastName: string;
     Email: string;
     Password: string;
+    ConfirmPassword: string;
     PhoneNumber: string;
     RoleId: string;
     AddressLines: { value: string }[];
@@ -110,61 +112,30 @@ const RegForm = () => {
         : [];
 
     useEffect(() => {
-        getAllRoles();
-    }, []);
-
-    useEffect(() => {
-        if (isProvider || isDeliver) {
+            getAllRoles();
             getAllCountries();
             getAllCities();
             getAllAreas();
             getAllZones();
             getAllAreaZones();
-        }
-    }, [isProvider, isDeliver]);
-
-    const { fields, append, remove } = useFieldArray({
-        control,
-        name: "AddressLines",
-    });
+        
+    },[]);
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
             const formData = new FormData();
 
-            formData.append("FullName", data.FullName);
-            formData.append("Email", data.Email);
+            formData.append("FirstName", data.FirstName);
+            formData.append("LastName", data.LastName);
             formData.append("Password", data.Password);
+            formData.append("ConfirmPassword", data.ConfirmPassword);
             formData.append("PhoneNumber", data.PhoneNumber);
             formData.append("RoleId", data.RoleId);
-            formData.append("IsActive", String(data.IsActive));
-
-            data.AddressLines.forEach((addr, index) => {
-                formData.append(`AddressLines[${index}]`, addr.value);
-            });
-
-            if (isProvider || isDeliver) {
-                if (data.Area) formData.append("Area", data.Area);
-                if (data.SubArea) formData.append("SubArea", data.SubArea);
-                if (data.Country) formData.append("Country", data.Country);
-
-                if (isDeliver) {
-                    if (data.Salary) formData.append("Salary", data.Salary);
-                    if (Array.isArray(data.Zone)) {
-                        data.Zone.forEach((z: any, index: number) => {
-                            formData.append(`ZoneId[${index}]`, z.value);
-                        });
-                    } else if (data.Zone) {
-                        formData.append("ZoneId[0]", data.Zone);
-                    }
-                } else {
-                    if (data.Zone) formData.append("Zone", data.Zone);
-                }
-
-                if (isProvider && data.IsPopular !== undefined) formData.append("IsPopular", String(data.IsPopular));
-                if (isProvider && profileImage) formData.append("ProfileImage", profileImage);
-            }
-
+            if (data.Area) formData.append("AreaId", data.Area);
+            if (data.SubArea) formData.append("CityId", data.SubArea);
+            if (data.Country) formData.append("CountryId", data.Country);
+            if (data.Zone) formData.append("ZoneId", data.Zone);
+            if (profileImage) formData.append("ProfileImage", profileImage);
             const result = await registerUser(formData);
 
             if (result) {
@@ -181,83 +152,26 @@ const RegForm = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-                <Label htmlFor="fullName">{t("name")}</Label>
-                <Input id="fullName" {...register("FullName", { required: "Required" })} />
+                <Label htmlFor="FirstName">{t("FirstName")}</Label>
+                <Input id="FirstName" {...register("FirstName", { required: "Required" })} />
             </div>
-
-
             <div className="space-y-2">
-                <Label htmlFor="email">{t("email")}</Label>
-                <Input id="email" type="email" {...register("Email", { required: "Required" })} />
+                <Label htmlFor="LastName">{t("LastName")}</Label>
+                <Input id="LastName" {...register("LastName", { required: "Required" })} />
             </div>
+
             <div className="space-y-2">
                 <Label htmlFor="phone">{t("phone")}</Label>
                 <Input id="phone" {...register("PhoneNumber", { required: "Required" })} />
             </div>
             <div className="space-y-2">
-                <Label>{t("Addresses")}</Label>
-                {fields.map((field, index) => (
-                    <div key={field.id} className="flex gap-2 items-start">
-                        <div className="flex-1">
-                            <Input
-                                placeholder={`${t("address_line")} ${index + 1}`}
-                                {...register(`AddressLines.${index}.value` as const, {
-                                    required: "Address is required",
-                                })}
-                            />
-                        </div>
-                        {fields.length > 1 && (
-                            <Button
-                                type="button"
-                                variant="outline"
-                                size="icon"
-                                onClick={() => remove(index)}
-                            >
-                                <Trash2 className="w-4 h-4" />
-                            </Button>
-                        )}
-                    </div>
-                ))}
-                <div className="flex items-center justify-between">
-                    <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => append({ value: "" })}
-                        className="flex items-center gap-1"
-                    >
-                        <Plus className="w-4 h-4" /> {t("add_address")}
-                    </Button>
-                </div>
-            </div>
-
-            <div className="space-y-2">
                 <Label htmlFor="password">{t("password")}</Label>
                 <Input id="password" type="password" {...register("Password", { required: "Required" })} />
             </div>
-
             <div className="space-y-2">
-                <Label htmlFor="userType">{t("user_type")}</Label>
-                <Controller
-                    name="RoleId"
-                    control={control}
-                    rules={{ required: "Please select a role" }}
-                    render={({ field }) => (
-                        <Select onValueChange={field.onChange} value={field.value}>
-                            <SelectTrigger><SelectValue placeholder={t("select_user_type")} /></SelectTrigger>
-                            <SelectContent>
-                                {roles?.map((role) => (
-                                    <SelectItem key={role.id} value={role.id}>
-                                        {role.name}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    )}
-                />
+                <Label htmlFor="confirmPassword">{t("confirm_password")}</Label>
+                <Input id="confirmPassword" type="password" {...register("ConfirmPassword", { required: "Required" })} />
             </div>
-
-            {(isProvider || isDeliver) && (
                 <>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
@@ -394,18 +308,6 @@ const RegForm = () => {
                             />
                             {errors.Zone?.message && <span className="text-sm text-red-500">{String(errors.Zone.message)}</span>}
                         </div>
-                        {isDeliver && (
-                            <div className="space-y-2">
-                                <Label htmlFor="salary">{t("salary")}</Label>
-                                <Input
-                                    id="salary"
-                                    type="number"
-                                    placeholder="Enter Salary"
-                                    {...register("Salary", { required: isDeliver ? "Required" : false })}
-                                />
-                                {errors.Salary?.message && <span className="text-sm text-red-500">{String(errors.Salary.message)}</span>}
-                            </div>
-                        )}
                     </div>
 
                     <div className="space-y-2 mt-4">
@@ -435,25 +337,8 @@ const RegForm = () => {
                             />
                         </div>
                     </div>
-
-                    {isProvider && (
-                        <div className="flex items-center space-x-2 mt-4">
-                            <Controller
-                                name="IsPopular"
-                                control={control}
-                                render={({ field }) => (
-                                    <Switch
-                                        id="is-popular"
-                                        checked={field.value}
-                                        onCheckedChange={field.onChange}
-                                    />
-                                )}
-                            />
-                            <Label htmlFor="is-popular">{t("is_popular")}</Label>
-                        </div>
-                    )}
                 </>
-            )}
+            {/* )} */}
 
             <Button type="submit" className="w-full">{t("create_account")}</Button>
         </form>

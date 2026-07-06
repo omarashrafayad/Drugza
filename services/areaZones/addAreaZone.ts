@@ -4,10 +4,10 @@ import { useState } from "react";
 function useAddAreaZone() {
     const [loading, setLoading] = useState(false);
 
-    const addAreaZone = async (data: { areaIds: number[]; zoneId: number }) => {
+    const addAreaZone = async (data: { areaId: number; zoneId: number }) => {
         setLoading(true);
         try {
-            const response = await AxiosInstance.post("/api/AreaZone/add-area-zone", data);
+            const response = await AxiosInstance.post("/api/AreaZones", data);
             
             return response.status === 200 || response.status === 201;
         } catch (err: any) {

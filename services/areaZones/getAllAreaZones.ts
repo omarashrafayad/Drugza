@@ -11,7 +11,7 @@ function useGetAreaZones() {
         setLoading(true);
         setError(null);
         try {
-            const response = await AxiosInstance.get("/api/AreaZone/all-area-zone");
+            const response = await AxiosInstance.get("/api/AreaZones");
             
             if (response?.status === 200) {
                 setAreaZones(response.data);

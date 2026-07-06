@@ -19,8 +19,8 @@ import {AuthType} from "@/types/auth";
 import Cookies from "js-cookie";
 
 const schema = z.object({
-  email: z.string().email({ message: "Your email is invalid." }),
-  password: z.string().min(4),
+  phoneNumber: z.string().min(11, "رقم الجوال يجب أن يكون 11 رقم"),
+  password: z.string().min(6, "كلمة المرور يجب أن تكون 6 أرقام على الأقل"),
 });
 const LoginForm = () => {
   const [isPending, startTransition] = React.useTransition();
@@ -43,7 +43,7 @@ const LoginForm = () => {
     resolver: zodResolver(schema),
     mode: "all",
     defaultValues: {
-      email: "",
+      phoneNumber: "",
       password: "",
     },
   });
@@ -69,22 +69,22 @@ const LoginForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-5 2xl:mt-7 space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="email" className=" font-medium text-default-600">
-          الايميل{" "}
+        <Label htmlFor="phoneNumber" className=" font-medium text-default-600">
+          رقم الجوال{" "}
         </Label>
         <Input size="lg"
           disabled={isPending}
-          {...register("email")}
-          type="email"
-          id="email"
+          {...register("phoneNumber")}
+          type="text"
+          id="phoneNumber"
           className={cn("", {
-            "border-destructive ": errors.email,
+            "border-destructive ": errors.phoneNumber,
           })}
         />
       </div>
-      {errors.email && (
+      {errors.phoneNumber && (
         <div className=" text-destructive mt-2 text-sm">
-          {errors.email.message}
+          {errors.phoneNumber.message}
         </div>
       )}
 

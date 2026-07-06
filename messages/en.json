@@ -1385,6 +1385,9 @@
   "auth": {
     "Signin": "Sign in to your account",
     "Signup": "Sign up for a new account",
+    "FirstName":"First Name",
+    "LastName":"Last Name",
+    "confirm_password":"Confirm Password",
     "CreateanaccounttostartusingAbuHamda": "Create an account to start using Abu Hamda",
     "name": "Name",
     "businessName": "Business Name",

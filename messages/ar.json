@@ -1381,6 +1381,9 @@
   "auth": {
     "Signin": "تسجيل الدخول إلى حسابك",
     "Signup": "إنشاء حساب جديد",
+    "FirstName":"الاسم الأول",
+    "LastName":"الاسم الأخير",
+    "confirm_password":"تأكيد كلمة المرور",
     "CreateanaccounttostartusingAbuHamda": "أنشئ حسابًا للبدء في استخدام أبوحمده",
     "name": "الاسم",
     "businessName": "اسم النشاط التجاري",
