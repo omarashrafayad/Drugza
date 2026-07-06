@@ -104,6 +104,7 @@
   },
   "EcommerceApp": {
     "categories": "الفئات",
+    
     "brands": "العلامات التجارية",
     "price": "السعر",
     "ratings": "التقييمات",
@@ -748,7 +749,6 @@
     "image": "الصورة",
     "Importing": "جاري التحميل",
     "ImportfromExcel": "استيراد من ملف إكسل",
-    "price": "السعر",
     "delete": "حذف",
     "productList": "قائمة المنتجات",
     "all":"الكل",
@@ -942,6 +942,7 @@
   },
   "categories": {
     "category_name": "اسم الفئة",
+    "search_categories": "بحث عن الفئة",
     "category_arabic_name": "اسم الفئة بالعربية",
     "company_percentage": "نسبة الشركة",
     "pref": "الأفضلية",
@@ -977,6 +978,7 @@
     "category_Information": "معلومات الفئة"
   },
   "subcategories": {
+    "search_Subcategories": "بحث عن الفئة الفرعية",
     "subcategory_name": "اسم الفئة الفرعية",
     "category_name": "اسم الفئة",
     "actions": "الإجراءات",
@@ -1379,6 +1381,9 @@
   "auth": {
     "Signin": "تسجيل الدخول إلى حسابك",
     "Signup": "إنشاء حساب جديد",
+    "FirstName":"الاسم الأول",
+    "LastName":"الاسم الأخير",
+    "confirm_password":"تأكيد كلمة المرور",
     "CreateanaccounttostartusingAbuHamda": "أنشئ حسابًا للبدء في استخدام أبوحمده",
     "name": "الاسم",
     "businessName": "اسم النشاط التجاري",
@@ -1430,6 +1435,7 @@
     "OrderConfiguration": "إعدادات الطلب",
     "MinimumOrderPrice": "الحد الأدنى لسعر الطلب",
     "Set_the_minimum_price_required_for_an_order": "حدد الحد الأدنى للسعر المطلوب للطلب",
-    "Save": "حفظ"
+    "Save": "حفظ",
+    "logout": "تسجيل الخروج"
   }
 }

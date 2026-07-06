@@ -7,7 +7,7 @@ function useDeleteAreaZone() {
     const deleteAreaZone = async (areaZoneId: string) => {
         setLoading(true);
         try {
-            const response = await AxiosInstance.delete(`/api/AreaZone/delete-area-zone`, {
+            const response = await AxiosInstance.delete(`/api/AreaZones`, {
                 params: { areaZoneId }
             });
             

@@ -8,7 +8,7 @@ function useGetAreaZoneById() {
     const getAreaZoneById = async (id: string | number) => {
         setLoading(true);
         try {
-            const response = await AxiosInstance.get(`/api/AreaZone/${id}`);
+            const response = await AxiosInstance.get(`/api/AreaZones/${id}`);
             
             if (response?.status === 200) {
                 return response.data as AreaZoneType;

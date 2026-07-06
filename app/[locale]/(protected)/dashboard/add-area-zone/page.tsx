@@ -20,7 +20,7 @@ import useGetAreas from "@/services/areas/getAllAreas";
 import useGetZones from "@/services/zones/getAllZones";
 import { Loader2, Save } from "lucide-react"; 
 import { useTranslations } from "next-intl";
-import ReactSelect, { MultiValue } from "react-select";
+import ReactSelect, { SingleValue } from "react-select";
 
 const AddAreaZonePage = () => {
   const { addAreaZone, loading: addingLoading } = useAddAreaZone(); 
@@ -29,7 +29,7 @@ const AddAreaZonePage = () => {
   const router = useRouter();
   const t = useTranslations("area_zones");
 
-  const [areaIds, setAreaIds] = useState<number[]>([]);
+  const [areaId, setAreaId] = useState<string>("");
   const [zoneId, setZoneId] = useState("");
   const [zoneSearch, setZoneSearch] = useState("");
 
@@ -45,7 +45,7 @@ const AddAreaZonePage = () => {
   ) || [];
 
   const handleAddSubmit = async () => {
-    if (areaIds.length === 0 || !zoneId) {
+    if (areaId.length === 0 || !zoneId) {
       toast.error(t("error"), { 
         description: "Please fill all required fields"
       });
@@ -53,7 +53,7 @@ const AddAreaZonePage = () => {
     }
 
     const payload = {
-      areaIds: areaIds,
+      areaId: Number(areaId),
       zoneId: Number(zoneId),
     };
 
@@ -92,18 +92,17 @@ const AddAreaZonePage = () => {
           <CardContent className="space-y-6">
             
             <div className="flex items-center flex-wrap gap-2">
-              <Label className="w-[180px] flex-none text-sm font-medium" htmlFor="areaIds">
+              <Label className="w-[180px] flex-none text-sm font-medium" htmlFor="areaId">
                 {t("select_area")}
               </Label>
               <div className="flex-1 min-w-[300px]">
                 <ReactSelect
-                  isMulti
                   options={areas?.map((area: any) => ({
                     value: area.id,
                     label: area.name
                   })) || []}
-                  onChange={(selected: MultiValue<{value: number, label: string}>) => {
-                    setAreaIds(selected.map(item => item.value));
+                  onChange={(selected: SingleValue<{value: number, label: string}>) => {
+                    setAreaId(selected ? selected.value.toString() : "");
                   }}
                   placeholder={t("select_area")}
                   classNamePrefix="react-select"

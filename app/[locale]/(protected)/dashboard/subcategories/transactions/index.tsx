@@ -96,7 +96,7 @@ const TransactionsTable = () => {
     <div className="w-full">
       <div className="flex flex-col sm:flex-row justify-between items-center py-4 px-6 border-b border-solid border-default-200 gap-4">
         <div className="w-full sm:w-auto flex-1">
-          <SearchInput placeholder="search subcategories..." data={data ?? []} setFilteredData={setFilteredSubCategories} filterKey={"name"}/>
+          <SearchInput placeholder={t("search_Subcategories")} data={data ?? []} setFilteredData={setFilteredSubCategories} filterKey={"name"}/>
         </div>
         <div className="flex items-center gap-4">
           <Link href="/dashboard/add-subcategory">

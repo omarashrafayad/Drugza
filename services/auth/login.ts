@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { AuthType } from "@/types/auth";
 
 type LoginCredentials = {
-    email: string;
+    phoneNumber: string;
     password: string;
 };
 

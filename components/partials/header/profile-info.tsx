@@ -18,8 +18,10 @@ import { signOut, auth } from "@/lib/auth";
 import Image from "next/image";
 import { Link } from '@/i18n/routing';
 import Cookies from "js-cookie";
+import { useTranslations } from "next-intl";
 
 const ProfileInfo = () => {
+  const t = useTranslations("Settings");
 
   const handleSignOut = () => {
     Cookies.remove('authToken');
@@ -37,7 +39,7 @@ const ProfileInfo = () => {
       >
         <button type="button" className="w-full flex items-center gap-2 cursor-pointer" >
           <Icon icon="heroicons:power" className="w-4 h-4" />
-          <span className="hidden md:inline-block">Log out</span>
+          <span className="hidden md:inline-block">{t("logout")}</span>
         </button>
       </div>
 
