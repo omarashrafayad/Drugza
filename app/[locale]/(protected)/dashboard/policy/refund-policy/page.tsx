@@ -17,8 +17,8 @@ import {
 const RefundPolicyPage = () => {
     const t = useTranslations("policy_page");
     const { getPolicy, addPolicy, fetchLoading, loading: updateLoading } = usePolicy({
-        getEndpoint: "/api/RefundPolicy/get-refund",
-        addEndpoint: "/api/RefundPolicy/add-refund"
+        getEndpoint: "/api/RefundPolicy/get-refundpolicy",
+        addEndpoint: "/api/RefundPolicy/add-refundpolicy"
     });
 
     const [content, setContent] = useState("");
