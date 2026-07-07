@@ -8,4 +8,5 @@ export type CategoryType = {
    companyPercentage?: string;
     imageName?: string;
     orderNum?: number;
+    imageUrl?: string;
 };

@@ -45,7 +45,7 @@ export const baseColumns = ({ refresh, t }: { refresh: () => void, t: (key: stri
     accessorKey: "categoryImageUrl",
     header: t("Image"),
     cell: ({ row }) => {
-      const imageUrl = row.getValue("imageUrl") as string;
+      const imageUrl = row.original.imageUrl;
       return (
         <div className="relative w-12 h-12 overflow-hidden rounded-md border border-default-200">
           {imageUrl ? (

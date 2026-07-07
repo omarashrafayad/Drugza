@@ -174,14 +174,14 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               icon: "heroicons-outline:cube",
               // permission: "Permissions.Product.View",
             },
-             {
-              href: "/dashboard/inventory-management",
-              label: t("price-management"),
-              active: pathname === "/dashboard/inventory-management",
-              children: [],
-              icon: "heroicons-outline:banknotes",
-              // permission: "Permissions.ProductPrice.View",
-            },
+            //  {
+            //   href: "/dashboard/inventory-management",
+            //   label: t("price-management"),
+            //   active: pathname === "/dashboard/inventory-management",
+            //   children: [],
+            //   icon: "heroicons-outline:banknotes",
+            //   // permission: "Permissions.ProductPrice.View",
+            // },
             {
               href: `/dashboard/edit-user/${id}`,
               label: t("edit-user"),
