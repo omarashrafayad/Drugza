@@ -4,7 +4,7 @@ import AxiosInstance from "@/lib/AxiosInstance";
 function useInsertRole() {
   const [loading, setLoading] = useState(false);
 
-  const insertRole = async (data: { roleName: string }) => {
+  const insertRole = async (data: { name: string }) => {
     setLoading(true);
     try {
       const response = await AxiosInstance.post("/api/Roles/insert-role", data);

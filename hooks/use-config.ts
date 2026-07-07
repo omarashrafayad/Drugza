@@ -35,7 +35,7 @@ export const defaultConfig: Config = {
   contentWidth: "wide",
   navbar: "sticky",
   footer: "default",
-  isRtl: false,
+  isRtl: true,
   showSwitcher: true,
   subMenu: false,
   hasSubMenu: false,

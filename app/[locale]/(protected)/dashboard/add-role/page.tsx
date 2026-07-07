@@ -12,18 +12,18 @@ import useInsertRole from "@/services/roles/insertRole";
 
 const AddRole = () => {
   const router = useRouter();
-  const [roleName, setRoleName] = useState<string>("");
+  const [name, setRoleName] = useState<string>("");
 
   const { insertRole, loading } = useInsertRole();
 
   const onSubmit = async () => {
-    if (!roleName.trim()) {
+    if (!name.trim()) {
       toast.error("Please enter a role name");
       return;
     }
 
     try {
-      const success = await insertRole({ roleName });
+      const success = await insertRole({ name });
       if (success) {
         toast.success("Role created successfully");
         router.push("/dashboard/roles");
@@ -47,7 +47,7 @@ const AddRole = () => {
             <div className="grid grid-cols-1 gap-4">
               <div className="flex items-center gap-2">
                 <Label className="w-[120px]">Role Name</Label>
-                <Input value={roleName} onChange={(e) => setRoleName(e.target.value)} placeholder="e.g. Manager" />
+                <Input value={name} onChange={(e) => setRoleName(e.target.value)} placeholder="e.g. Manager" />
               </div>
             </div>
 

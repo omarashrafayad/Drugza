@@ -44,7 +44,7 @@ function isRouteAllowed(pathname: string, role: string): boolean {
 
 export default async function middleware(request: NextRequest) {
   const config = request.cookies.get('config');
-  let isRtl = false;
+  let isRtl = true;
 
   try {
     isRtl = config ? JSON.parse(config.value || '{}').isRtl : false;

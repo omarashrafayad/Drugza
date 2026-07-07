@@ -13,9 +13,9 @@ import { cn } from "@/lib/utils"
 import { Loader2 } from 'lucide-react';
 import { toast } from "sonner"
 import { useRouter } from '@/components/navigation';
-import {loginWithCredentials} from "@/services/auth/login";
-import {defaultRouteByRole, normalizeRole} from "@/lib/roleRoutes";
-import {AuthType} from "@/types/auth";
+import { loginWithCredentials } from "@/services/auth/login";
+import { defaultRouteByRole, normalizeRole } from "@/lib/roleRoutes";
+import { AuthType } from "@/types/auth";
 import Cookies from "js-cookie";
 
 const schema = z.object({
