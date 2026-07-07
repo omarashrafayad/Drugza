@@ -1,6 +1,7 @@
 export interface SpecialOfferType {
     id: number;
-    imagePath: string;
+    imageName: string;
+    // imagePath: string;
     sectionNum: number;
     link?: string | null;
 }

@@ -28,7 +28,7 @@ function EditSpecialOfferPage() {
     const handleSubmit = async (data: { imageFile: File | null; sectionNum: number; link?: string }) => {
         const formData = new FormData();
         if (data.imageFile) {
-            formData.append("file", data.imageFile);
+            formData.append("ImageFile", data.imageFile);
         }
         formData.append("SectionNum", data.sectionNum.toString());
         if (data.link) {

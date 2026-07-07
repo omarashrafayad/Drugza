@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 interface SpecialOfferFormProps {
     initialData?: {
         id?: number;
+        imageName?: string;
         imagePath?: string;
         sectionNum?: number;
         link?: string | null;
@@ -26,7 +27,7 @@ interface SpecialOfferFormProps {
 const SpecialOfferForm = ({ initialData, onSubmit, loading, title }: SpecialOfferFormProps) => {
     const t = useTranslations("SpecialOffers");
     const [imageFile, setImageFile] = useState<File | null>(null);
-    const [previewUrl, setPreviewUrl] = useState<string | null>(initialData?.imagePath || null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(initialData?.imageName || null);
     const [sectionNum, setSectionNum] = useState<string>(initialData?.sectionNum?.toString() || "1");
     const [link, setLink] = useState<string>(initialData?.link || "");
 
@@ -40,11 +41,11 @@ const SpecialOfferForm = ({ initialData, onSubmit, loading, title }: SpecialOffe
 
     const removeImage = () => {
         setImageFile(null);
-        setPreviewUrl(initialData?.imagePath || null);
+        setPreviewUrl(initialData?.imageName || null);
     };
 
     const handleSubmit = async () => {
-        if (!imageFile && !initialData?.imagePath) {
+        if (!imageFile && !initialData?.imageName) {
             toast.error(t("imageRequired") || "Image is required");
             return;
         }
