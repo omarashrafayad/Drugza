@@ -91,7 +91,7 @@ export const baseColumns = ({ refresh, t }: { refresh: () => void; t: (key: stri
         accessorKey: "imagePath",
         header: t("image"),
         cell: ({ row }) => {
-            const imageUrl = row.getValue("imagePath") as string;
+            const imageUrl = row.getValue("imageName") as string;
             return (
                 <div className="relative w-20 h-12 overflow-hidden rounded-md border border-default-200">
                     <Image 
