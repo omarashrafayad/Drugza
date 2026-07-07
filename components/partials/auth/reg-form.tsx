@@ -73,10 +73,7 @@ const RegForm = () => {
         formState: { errors }
     } = useForm<Inputs>({
         defaultValues: {
-            IsActive: true,
-            IsPopular: false,
             RoleId: "",
-            AddressLines: [{ value: "" }],
             Area: "",
             SubArea: "",
             Country: "",
@@ -171,6 +168,26 @@ const RegForm = () => {
             <div className="space-y-2">
                 <Label htmlFor="confirmPassword">{t("confirm_password")}</Label>
                 <Input id="confirmPassword" type="password" {...register("ConfirmPassword", { required: "Required" })} />
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="userType">User Type</Label>
+                <Controller
+                    name="RoleId"
+                    control={control}
+                    rules={{ required: "Please select a role" }}
+                    render={({ field }) => (
+                        <Select onValueChange={field.onChange} value={field.value}>
+                            <SelectTrigger><SelectValue placeholder="Select a role" /></SelectTrigger>
+                            <SelectContent>
+                                {roles?.map((role) => (
+                                    <SelectItem key={role.id} value={role.id}>
+                                        {role.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    )}
+                />
             </div>
                 <>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
