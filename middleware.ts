@@ -52,7 +52,7 @@ export default async function middleware(request: NextRequest) {
     isRtl = false;
   }
 
-  const preferredLocale = isRtl ? 'ar' : 'en';
+  const preferredLocale = 'ar';
   const headerLocale = request.headers.get('dashcode-locale');
   const defaultLocale = headerLocale && locales.includes(headerLocale) ? headerLocale : preferredLocale;
 
