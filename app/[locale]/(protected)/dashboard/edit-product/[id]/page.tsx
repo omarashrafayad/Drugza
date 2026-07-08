@@ -40,6 +40,7 @@ const EditProduct = () => {
     ProductImage: [] as File[],
     Price: "",
     BrandId: "",
+    IsPopular:false,
     sku: "",
   });
 
@@ -57,6 +58,7 @@ useEffect(() => {
       sku: product.sku || "",
       Price: product.price ? String(product.price) : "",
       BrandId: product.brandId ? String(product.brandId) : "",
+      IsPopular:product.isPopular || false,
     });
   }
 }, [product]);
@@ -91,6 +93,7 @@ useEffect(() => {
     data.append("BrandId", formData.BrandId);
     data.append("Price", formData.Price);
     data.append("sku", formData.sku);
+    data.append("IsPopular", formData.IsPopular.toString());
 
     if (formData.ProductImage.length > 0) {
       if (formData.ProductImage.length === 1) {
@@ -326,6 +329,17 @@ useEffect(() => {
                   </div>
                 )}
               </div>
+                  <div className="flex items-center gap-2 pt-4">
+              <Switch 
+                id="isPopular" 
+                checked={formData.IsPopular} 
+                onCheckedChange={(val) => setFormData({...formData, IsPopular: val})} 
+              />
+              <Label htmlFor="isPopular" className="cursor-pointer font-semibold">
+                {t("isPopular")}
+              </Label>
+            </div>
+
             </div>
           </CardContent>
         </Card>

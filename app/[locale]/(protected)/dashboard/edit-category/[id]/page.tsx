@@ -13,6 +13,7 @@ import useGetCategoryById from "@/services/categories/getCategoryById";
 import useUpdateCategoryById from "@/services/categories/UpdateCatergory";
 import { Loader2, Upload, FileImage } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Switch } from "@radix-ui/react-switch";
 
 const EditCategory = () => {
   const router = useRouter();
@@ -27,6 +28,8 @@ const EditCategory = () => {
   const [Name, setName] = useState("");
   // const [companyPercentage, setCompanyPercentage] = useState("");
   const [CategoryImage, setImageFile] = useState<File | null>(null);
+  const [isPopular, setIsPopular] = useState<boolean>(false);
+
 
   useEffect(() => {
     if (id) gettingCategoryById(id);

@@ -35,6 +35,8 @@ const AddProduct = () => {
   const [ProductImage, setProductImage] = useState<File[]>([]);
   const [Price, setPrice] = useState<number>(0);
     const [sku, setSku] = useState<string>("");
+      const [isPopular, setIsPopular] = useState<boolean>(false);
+
   const [SubCategorySearch, setSubCategorySearch] = useState<string>("");
   const [filteredCategories, setFilteredCategories] = useState<any[]>([]);
   const [brandSearch, setBrandSearch] = useState<string>("");
@@ -91,6 +93,8 @@ const AddProduct = () => {
     formData.append("BrandId", brandId);
     formData.append("Price", Price.toString());
     formData.append("sku", sku.toString());
+        formData.append("IsPopular", isPopular.toString());
+
 
     if (ProductImage.length === 1) {
       formData.append("ProductImage", ProductImage[0]);
@@ -237,12 +241,7 @@ const AddProduct = () => {
               <Label>{t("description")}</Label>
               <Textarea value={Description} onChange={(e) => setDescription(e.target.value)} />
             </div>
-            {/* <div className="space-y-2">
-              <Label>Arabic Description</Label>
-              <Textarea value={arabicDescription} onChange={(e) => setArabicDescription(e.target.value)} />
-            </div> */}
-
-            {/* <div className="flex items-center gap-2 pt-4">
+          <div className="flex items-center gap-2 pt-4">
               <Switch 
                 id="isPopular" 
                 checked={isPopular} 
@@ -251,7 +250,7 @@ const AddProduct = () => {
               <Label htmlFor="isPopular" className="cursor-pointer font-semibold">
                 {t("isPopular")}
               </Label>
-            </div> */}
+            </div>
 
           </CardContent>
         </Card>

@@ -1,10 +1,6 @@
 import axiosInstance from "@/lib/AxiosInstance";
 
-/**
- * Initiates the forget password process by sending an email request.
- * Endpoint: POST /api/Users/forget-password
- * Parameters: email (in query)
- */
+
 export const forgetPassword = async (email: string): Promise<any> => {
   try {
     const response = await axiosInstance.post("/api/Users/forget-password", null, {
@@ -16,11 +12,6 @@ export const forgetPassword = async (email: string): Promise<any> => {
   }
 };
 
-/**
- * Verifies the OTP code sent to the user's email.
- * Endpoint: POST /api/Users/verify-otp
- * Parameters: email, code (in query)
- */
 export const verifyOtp = async (email: string, code: string): Promise<any> => {
   try {
     const response = await axiosInstance.post("/api/Users/verify-otp", null, {
@@ -32,11 +23,7 @@ export const verifyOtp = async (email: string, code: string): Promise<any> => {
   }
 };
 
-/**
- * Resets the password using the new password value.
- * Endpoint: POST /api/Users/reset-password
- * Parameters: email, newPassword (in query)
- */
+
 export const resetPassword = async (email: string, newPassword: string): Promise<any> => {
   try {
     const response = await axiosInstance.post("/api/Users/reset-password", null, {
@@ -48,11 +35,7 @@ export const resetPassword = async (email: string, newPassword: string): Promise
   }
 };
 
-/**
- * Resends the OTP code to the user's email.
- * Endpoint: POST /api/Users/resend-otp
- * Parameters: email (in query)
- */
+
 export const resendOtp = async (email: string): Promise<any> => {
   try {
     const response = await axiosInstance.post("/api/Users/resend-otp", null, {

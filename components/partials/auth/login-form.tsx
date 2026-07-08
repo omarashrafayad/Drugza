@@ -58,9 +58,9 @@ const LoginForm = () => {
         const route = defaultRouteByRole[role || ""] || "/dashboard/analytics";
 
         router.push(route);
-        toast.success("Successfully logged in");
+        toast.success("تم تسجيل الدخول بنجاح");
       } catch (err: any) {
-        toast.error(err.message || "Login failed");
+        toast.error(err.message || "فشل تسجيل الدخول");
       }
     });
   };

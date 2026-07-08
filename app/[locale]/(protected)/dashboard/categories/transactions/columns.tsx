@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { CategoryType } from "@/types/category";
 import useDeleteCategoryById from "@/services/categories/DeleteCategory";
-import getCategories from "@/services/categories/getCategories";
 import Image from "next/image";
 
 export const baseColumns = ({ refresh, t }: { refresh: () => void, t: (key: string) => string; }): ColumnDef<CategoryType>[] => [
@@ -17,30 +16,6 @@ export const baseColumns = ({ refresh, t }: { refresh: () => void, t: (key: stri
     header: t("category_name"),
     cell: ({ row }) => <span>{row.getValue("name") || t("unknown")}</span>,
   },
-  // {
-  //     accessorKey: "arabicName",
-  //     header: t("category_arabic_name"),
-  //     cell: ({ row }) => <span>{row.getValue("arabicName") || t("unknown")}</span>,
-  // },
-  // {
-  //     accessorKey: "pref",
-  //     header: t("pref"),
-  //     cell: ({ row }) => <span>{row.getValue("pref")}</span>,
-  // },
-  // {
-  //     accessorKey: "companyPercentage",
-  //     header: t("company_percentage"),
-  //     cell: ({ row }) => {
-  //         const value = row.getValue("companyPercentage");
-  //         return (
-  //             <span>
-  //                 {value !== null && value !== undefined && value !== "" 
-  //                     ? `${value}%` 
-  //                     : "-"}
-  //             </span>
-  //         );
-  //     },
-  // },
   {
     accessorKey: "categoryImageUrl",
     header: t("Image"),
