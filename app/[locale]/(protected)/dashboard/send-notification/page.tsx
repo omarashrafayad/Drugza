@@ -19,26 +19,36 @@ import { toast } from "sonner";
 import { UserType } from "@/types/users";
 import ReactSelect, { MultiValue } from "react-select";
 import { useTranslations } from "next-intl";
+import useGetAllRoles from "@/services/roles/getAllRoles";
+import useGettingAllUsersInRegion from "@/services/area/gettingAllusersInRegion";
+import GetUsers from "@/services/users/GetAllUsers";
 
 const SendNotificationPage = () => {
   const t = useTranslations("NotificationsList");
-  const [recipientType, setRecipientType] = useState<string>("all_doctors");
+  const [recipientType, setRecipientType] = useState<string>("All");
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
   const [title, setTitle] = useState<string>("");
   const [roleId, setRoleId] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [expiryDate, setExpiryDate] = useState<Date | undefined>(new Date());
 
-  const { users, loading: usersLoading, getUsersByRoleId } = useGetUsersByRoleId();
+  // const { users, loading: usersLoading, getUsersByRoleId } = useGetUsersByRoleId();
+  const{data: users, loading: usersLoading, gettingAllUsers} = GetUsers()
   const { sendNotification, loading: sending } = useSendNotification();
+  const { data, loading: rolesLoading, getAllRoles } = useGetAllRoles();
 
   useEffect(() => {
-    if (recipientType === "specific_doctor") {
-      getUsersByRoleId("E48E5A9F-2074-4DE9-A849-5C69FDD45E4E"); // Doctor Role ID
-    } else if (recipientType === "specific_provider") {
-      getUsersByRoleId("1A5A84FB-23C3-4F9B-A122-4C5BC6C5CB2D"); // Provider Role ID
-    }
-  }, [recipientType]);
+    getAllRoles();
+    gettingAllUsers();
+  }, []);
+
+  // useEffect(() => {
+  //   if (recipientType === "specific_doctor") {
+  //     getUsersByRoleId("E48E5A9F-2074-4DE9-A849-5C69FDD45E4E"); // Doctor Role ID
+  //   } else if (recipientType === "specific_provider") {
+  //     getUsersByRoleId("1A5A84FB-23C3-4F9B-A122-4C5BC6C5CB2D"); // Provider Role ID
+  //   }
+  // }, [recipientType]);
 
   const handleSend = async () => {
     if (!title) {
@@ -58,14 +68,15 @@ const SendNotificationPage = () => {
       return;
     }
 
-    if (!roleId) {
-      toast.error("Please select a role");
-      return;
-    }
+    // if (!roleId) {
+    //   toast.error("Please select a role");
+    //   return;
+    // }
 
-    let recipientTypeValue = RecipientType.Specific;
-    if (recipientType === "all_doctors") recipientTypeValue = RecipientType.AllDoctors;
-    else if (recipientType === "all_providers") recipientTypeValue = RecipientType.AllProviders;
+    let recipientTypeValue = RecipientType.SpecificUser;
+    if (recipientType === "all") recipientTypeValue = RecipientType.All;
+    else if (recipientType === "role") recipientTypeValue = RecipientType.Role;
+    else if (recipientType === "specific_User") recipientTypeValue = RecipientType.SpecificUser;
 
     const payload = {
       recipientType: recipientTypeValue,
@@ -105,30 +116,29 @@ const SendNotificationPage = () => {
               setSelectedUserIds([]);
             }}>
               <SelectTrigger>
-                <SelectValue placeholder={t("Select_Who_To_Send_To")} />
+                <SelectValue placeholder="Select Recipient Type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all_doctors">{t("AllDoctors")}</SelectItem>
-                <SelectItem value="all_providers">{t("AllProviders")}</SelectItem>
-                <SelectItem value="specific_doctor">{t("SpecificDoctor")}</SelectItem>
-                <SelectItem value="specific_provider">{t("SpecificProvider")}</SelectItem>
+                <SelectItem value="All">All</SelectItem>
+                <SelectItem value="role">Role</SelectItem>
+                <SelectItem value="specific_User">SpecificUser</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           {recipientType.startsWith("specific") && (
             <div className="space-y-2">
-              <Label>{t("Select")}{t(recipientType.includes("doctor") ? "Doctor" : "Provider")}</Label>
+              <Label>Search for users</Label>
               <ReactSelect
                 isMulti
                 options={users?.map((user: UserType) => ({
                   value: user.id,
-                  label: `${user.userName} (${user.email})`
+                  label: `${user.fullName}`
                 })) || []}
                 onChange={(selected: MultiValue<{ value: string, label: string }>) => {
                   setSelectedUserIds(selected.map(item => item.value));
                 }}
-                placeholder={`${t("Search")}${t(recipientType.includes("doctor") ? "Doctor" : "Provider")}...`}
+                placeholder="Search for users"
                 classNamePrefix="react-select"
                 classNames={{
                   control: () =>
@@ -177,6 +187,23 @@ const SendNotificationPage = () => {
               />
             </div>
           )}
+{recipientType === "role" && (
+  <>
+            <Label>Roles</Label>
+            <Select value={roleId} onValueChange={(value) => setRoleId(value)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select Role" />
+              </SelectTrigger>
+              <SelectContent>
+                {data?.map((role: any) => (
+                  <SelectItem key={role.id} value={role.id}>
+                    {role.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+  </>
+)}
 
           <div className="space-y-2">
             <Label htmlFor="title">{t("Title")}</Label>
@@ -188,22 +215,6 @@ const SendNotificationPage = () => {
             />
           </div>
 
-          <div className="space-y-2">
-            <Label>{t("RoleID")}</Label>
-           <Input
-           id="roleId"
-           placeholder={t("Enter_role_ID")}
-           value={roleId}
-           onChange={(e) => setRoleId(e.target.value)}
-           />
-            <Label>Role</Label>
-            <Input
-              id="roleId"
-              placeholder="Enter role ID..."
-              value={roleId}
-              onChange={(e) => setRoleId(e.target.value)}
-            />
-          </div>
 
           <div className="space-y-2">
             <Label htmlFor="message">{t("Message")}</Label>

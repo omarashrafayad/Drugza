@@ -2,9 +2,9 @@ import { useState } from "react";
 import AxiosInstance from "@/lib/AxiosInstance";
 
 export enum RecipientType {
-  AllDoctors = 0,
-  AllProviders = 1,
-  Specific = 2,
+  All = 0,
+  Role = 1,
+  SpecificUser = 2,
 }
 
 export interface NotificationPayload {
