@@ -1,0 +1,66 @@
+import axios, {
+    AxiosError,
+    AxiosResponse,
+    InternalAxiosRequestConfig
+} from 'axios';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import Cookies from "js-cookie";
+
+const AxiosInstance = axios.create({
+    // baseURL: 'https://dentzoneapi.runasp.net/',
+    baseURL: 'http://dentzonedev.runasp.net/',
+});
+
+AxiosInstance.interceptors.request.use(
+    async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
+        const token = Cookies.get('authToken');
+        if (token && config.headers && typeof config.headers.set === 'function') {
+            config.headers.set('Authorization', `Bearer ${token}`, "Accept",);
+        }
+        return config;
+    },
+    (error: AxiosError) => Promise.reject(error)
+);
+
+AxiosInstance.interceptors.response.use(
+    (response: AxiosResponse) => {
+        // Clear cached permissions on any successful mutation to role or user endpoints
+        const url = response.config.url || "";
+        const method = response.config.method?.toLowerCase() || "";
+        if (
+            ["post", "put", "delete", "patch"].includes(method) &&
+            (url.includes("/Roles/") || url.includes("/Users/") || url.includes("/api/Roles") || url.includes("/api/Users"))
+        ) {
+            if (typeof window !== "undefined") {
+                try {
+                    for (let i = sessionStorage.length - 1; i >= 0; i--) {
+                        const key = sessionStorage.key(i);
+                        if (key && key.startsWith("user_permissions_")) {
+                            sessionStorage.removeItem(key);
+                        }
+                    }
+                } catch (e) {
+                    console.error("Failed to clear sessionStorage permissions cache:", e);
+                }
+            }
+        }
+        return response;
+    },
+    async (error: AxiosError) => {
+        const status = error.response?.status;
+        if ([401, 403].includes(status ?? 0)) {
+            // await AsyncStorage.removeItem('Token');
+            Cookies.remove('authToken');
+            Cookies.remove('userRole');
+            Cookies.remove('userId');
+            if (typeof window !== "undefined") {
+                window.location.href = '/en';
+            }
+        } else if ([400, 404, 500].includes(status ?? 0)) {
+            return Promise.reject(error);
+        }
+        return Promise.reject(error);
+    }
+);
+
+export default AxiosInstance;

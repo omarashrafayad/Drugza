@@ -1,0 +1,247 @@
+"use client";
+
+import * as React from "react";
+import {
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { baseColumns } from "./columns";
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+import TablePagination from "./table-pagination";
+import { Card, CardContent } from "@/components/ui/card";
+import GetUsers from "@/services/users/GetAllUsers";
+import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
+import useGetUsersByRoleId from "@/services/users/GetUsersByRoleId";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SelectItemText, SelectViewport } from "@radix-ui/react-select";
+import { UserRoles } from "@/lib/data";
+import useGetAllRoles from "@/services/roles/getAllRoles";
+import SearchInput from "@/app/[locale]/(protected)/components/SearchInput/SearchInput";
+import { Button } from "@/components/ui/button";
+import { OrderStatus, OrderStatusLabel, UserRole, UserRoleLabel } from "@/enum";
+import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+
+interface TransactionsTableProps {
+  defaultRoleName?: string;
+  hideTabs?: boolean;
+}
+
+const TransactionsTable = ({ defaultRoleName, hideTabs = false }: TransactionsTableProps = {}) => {
+  const t = useTranslations("productList"); // Using productList for orderNum or common keys
+
+  const { data, loading, gettingAllUsers } = GetUsers()
+  const { users: usersByRole, loading: loadingByRole, getUsersByRoleId } = useGetUsersByRoleId()
+  const { data: roles, getAllRoles } = useGetAllRoles();
+
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [selectedRole, setSelectedRole] = useState<"all" | string>("all");
+
+
+  useEffect(() => {
+    if (selectedRole === "all" && data) {
+      setFilteredUsers(data);
+    } else if (selectedRole !== "all" && usersByRole) {
+      setFilteredUsers(usersByRole);
+    }
+  }, [data, usersByRole, selectedRole]);
+
+
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({
+      isPopular: false,
+    });
+
+  useEffect(() => {
+    const inventoryRole = roles?.find(r => r.name === "Inventory");
+    setColumnVisibility((prev) => ({
+      ...prev,
+      isPopular: selectedRole === inventoryRole?.id,
+    }));
+  }, [selectedRole, roles]);
+
+  const [rowSelection, setRowSelection] = React.useState({});
+
+  const selectedRoleName = roles?.find(r => r.id === selectedRole)?.name;
+  const isRepresentative = selectedRoleName === "representative" || selectedRoleName === "Preparation representative";
+  const showWorkingHours = selectedRoleName === "representative" || selectedRoleName === "Inventory";
+  const isProvider = roles?.find(r => r.id === selectedRole)?.name === "Inventory";
+  const columns = baseColumns({ refresh: () => gettingAllUsers(), isRepresentative, isProvider, showWorkingHours, t });
+
+  const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
+
+  const handleRoleFilter = (role: "all" | string) => {
+    setSelectedRole(role);
+    if (role === "all") {
+      gettingAllUsers();
+    } else {
+      getUsersByRoleId(role);
+    }
+  };
+
+  const searchParams = useSearchParams();
+  const filterUserId = searchParams ? searchParams.get("userId") : null;
+
+  const table = useReactTable({
+    data: filteredUsers ?? [],
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  });
+
+  useEffect(() => {
+    if (!defaultRoleName) {
+      gettingAllUsers()
+    }
+    getAllRoles()
+  }, [defaultRoleName]);
+
+  useEffect(() => {
+    if (roles && defaultRoleName) {
+      const foundRole = roles.find(
+        (r) => r.name.toLowerCase() === defaultRoleName.toLowerCase()
+      );
+      if (foundRole) {
+        setSelectedRole(foundRole.id);
+        getUsersByRoleId(foundRole.id);
+      }
+    }
+  }, [roles, defaultRoleName]);
+
+  // Remove redundant useEffect that sets filteredUsers only once
+
+
+  return (
+    <div className={"flex flex-col"}>
+      <div className="px-5 py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <SearchInput
+          placeholder="Search Email..."
+          data={defaultRoleName ? (usersByRole ?? []) : (data ?? [])}
+          filterKey={"userName"}
+          setFilteredData={setFilteredUsers}
+        />
+
+        {!hideTabs && (
+          <div className="inline-flex flex-wrap items-center border border-solid divide-x divide-default-200 divide-solid rounded-md overflow-hidden">
+            <Button
+              size="md"
+              variant={selectedRole === "all" ? "default" : "ghost"}
+              color="default"
+              className="ring-0 outline-0 hover:ring-0 hover:ring-offset-0 font-normal border-default-200 rounded-none cursor-pointer"
+              onClick={() => handleRoleFilter("all")}
+            >
+              All
+            </Button>
+
+            {roles?.map((role) => (
+              <Button
+                key={role.id}
+                size="md"
+                variant={selectedRole === role.id ? "default" : "ghost"}
+                color="default"
+                className="ring-0 outline-0 hover:ring-0 hover:ring-offset-0 font-normal border-default-200 rounded-none cursor-pointer"
+                onClick={() => handleRoleFilter(role.id)}
+              >
+                {role.name}
+              </Button>
+            ))}
+          </div>
+        )}
+      </div>
+      {loading == true || loadingByRole == true ? (
+        <div className="flex justify-center items-center">
+          <Loader2 size={24} className="animate-spin" />
+        </div>
+      ) : (
+        <Card className="w-full">
+          <CardContent>
+            <div className="border border-solid border-default-200 rounded-lg overflow-hidden border-t-0">
+              <Table>
+                <TableHeader className="bg-default-200">
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => {
+                        return (
+                          <TableHead className="last:text-start" key={header.id}>
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                          </TableHead>
+                        );
+                      })}
+                    </TableRow>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id} className="h-[75px]">
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={columns.length}
+                        className="h-24 text-center"
+                      >
+                        No results.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+          <TablePagination table={table} />
+        </Card>
+      )}
+    </div>
+  );
+};
+export default TransactionsTable;
