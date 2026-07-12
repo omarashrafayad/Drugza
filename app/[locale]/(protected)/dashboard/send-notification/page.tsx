@@ -171,23 +171,23 @@ const SendNotificationPage = () => {
               />
             </div>
           )}
-{recipientType === "role" && (
-  <>
-            <Label>Roles</Label>
-            <Select value={roleId} onValueChange={(value) => setRoleId(value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select Role" />
-              </SelectTrigger>
-              <SelectContent>
-                {data?.map((role: any) => (
-                  <SelectItem key={role.id} value={role.id}>
-                    {role.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-  </>
-)}
+          {recipientType === "role" && (
+          <>
+                    <Label>Roles</Label>
+                    <Select value={roleId} onValueChange={(value) => setRoleId(value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Role" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {data?.map((role: any) => (
+                          <SelectItem key={role.id} value={role.id}>
+                            {role.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+          </>
+          )}
 
           <div className="space-y-2">
             <Label htmlFor="title">{t("Title")}</Label>
