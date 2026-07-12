@@ -32,7 +32,6 @@ const SendNotificationPage = () => {
   const [message, setMessage] = useState<string>("");
   const [expiryDate, setExpiryDate] = useState<Date | undefined>(new Date());
 
-  // const { users, loading: usersLoading, getUsersByRoleId } = useGetUsersByRoleId();
   const{data: users, loading: usersLoading, gettingAllUsers} = GetUsers()
   const { sendNotification, loading: sending } = useSendNotification();
   const { data, loading: rolesLoading, getAllRoles } = useGetAllRoles();
@@ -41,14 +40,6 @@ const SendNotificationPage = () => {
     getAllRoles();
     gettingAllUsers();
   }, []);
-
-  // useEffect(() => {
-  //   if (recipientType === "specific_doctor") {
-  //     getUsersByRoleId("E48E5A9F-2074-4DE9-A849-5C69FDD45E4E"); // Doctor Role ID
-  //   } else if (recipientType === "specific_provider") {
-  //     getUsersByRoleId("1A5A84FB-23C3-4F9B-A122-4C5BC6C5CB2D"); // Provider Role ID
-  //   }
-  // }, [recipientType]);
 
   const handleSend = async () => {
     if (!title) {
@@ -61,17 +52,10 @@ const SendNotificationPage = () => {
       return;
     }
 
-
-
     if (!expiryDate) {
       toast.error("Please select an expiry date");
       return;
     }
-
-    // if (!roleId) {
-    //   toast.error("Please select a role");
-    //   return;
-    // }
 
     let recipientTypeValue = RecipientType.SpecificUser;
     if (recipientType === "all") recipientTypeValue = RecipientType.All;
@@ -96,7 +80,7 @@ const SendNotificationPage = () => {
       setSelectedUserIds([]);
       setRoleId("");
       setExpiryDate(new Date());
-      setRecipientType("all_doctors");
+      setRecipientType("All");
     } else {
       toast.error(error || "Failed to send notification");
     }
