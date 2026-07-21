@@ -7,8 +7,7 @@ import axios, {
 import Cookies from "js-cookie";
 
 const AxiosInstance = axios.create({
-    // baseURL: 'https://dentzoneapi.runasp.net/',
-    baseURL: 'https://dentzonedev.runasp.net/',
+    baseURL: 'https://drugzaapi.runasp.net/',
 });
 
 AxiosInstance.interceptors.request.use(
