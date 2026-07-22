@@ -180,7 +180,7 @@ const EditOrder: React.FC = () => {
   const handleItemProviderChange = (subOrderIdx: number, itemIdx: number, newProviderId: string) => {
     const newSubOrders = [...subOrders];
     const manager = inventoryManagers.find((u: any) => u.id === newProviderId);
-    const providerName = manager?.fullName || manager?.userName || "Unknown";
+    const providerName = manager?.bussinesName || manager?.userName || "Unknown";
 
     newSubOrders[subOrderIdx].inventoryUserId = newProviderId;
     newSubOrders[subOrderIdx].inventoryName = providerName;
@@ -240,7 +240,7 @@ const EditOrder: React.FC = () => {
         newSubOrders[subOrderIdx].inventoryUserId = providerId;
         const manager = inventoryManagers.find((u: any) => u.id === providerId);
         if (manager) {
-          newSubOrders[subOrderIdx].inventoryName = manager.fullName || manager.userName || "Unknown";
+          newSubOrders[subOrderIdx].inventoryName = manager.businessName || manager.userName || "Unknown";
         }
       }
 
@@ -400,7 +400,7 @@ const EditOrder: React.FC = () => {
                               <SelectContent>
                                 {inventoryManagers.map((user: UserType) => (
                                   <SelectItem key={user.id} value={user.id} className="text-xs">
-                                    {user.fullName}
+                                    {user.bussinesName}
                                   </SelectItem>
                                 ))}
                               </SelectContent>

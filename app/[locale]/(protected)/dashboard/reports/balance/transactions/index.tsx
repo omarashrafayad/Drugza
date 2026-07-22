@@ -217,7 +217,7 @@ export default function TransactionsTable({ type = "account" }: BalanceTableType
                             </SelectTrigger>
                             <SelectContent>
                                 {data?.map((user: UserType) => (
-                                    <SelectItem key={user.id} value={user.id}>{user.fullName}</SelectItem>
+                                    <SelectItem key={user.id} value={user.id}>{user.bussinesName}</SelectItem>
                                 ))}
                             </SelectContent>
                         </Select>

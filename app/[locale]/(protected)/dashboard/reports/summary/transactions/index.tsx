@@ -197,7 +197,7 @@ export default function TransactionsTable() {
                             <SelectContent>
                                 {pharmacies.map((user: UserType) => (
                                     <SelectItem key={user.id} value={user.id}>
-                                        {user.fullName}
+                                        {user.bussinesName}
                                     </SelectItem>
                                 ))}
                             </SelectContent>
@@ -216,14 +216,13 @@ export default function TransactionsTable() {
                             <SelectContent>
                                 {users.map((user: UserType) => (
                                     <SelectItem key={user.id} value={user.id}>
-                                        {user.fullName}
+                                        {user.bussinesName}
                                     </SelectItem>
                                 ))}
                             </SelectContent>
                         </SelectGroup>
                     </Select>
 
-                   
                     {/* Status Filter */}
                     <Select
                         value={status === undefined ? "" : status.toString()}

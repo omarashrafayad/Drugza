@@ -211,7 +211,7 @@ export default function TransactionsTable() {
                             <SelectGroup>
                                 {pharmacies.map((user: UserType) => (
                                     <SelectItem key={user.id} value={user.id}>
-                                        {user.fullName}
+                                        {user.bussinesName}
                                     </SelectItem>
                                 ))}
                             </SelectGroup>
@@ -233,7 +233,7 @@ export default function TransactionsTable() {
                             <SelectGroup>
                                 {users.map((user: UserType) => (
                                     <SelectItem key={user.id} value={user.id}>
-                                        {user.fullName}
+                                        {user.bussinesName}
                                     </SelectItem>
                                 ))}
                             </SelectGroup>

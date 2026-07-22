@@ -294,7 +294,7 @@ export default function TransactionsTable({ type = "area" }: TransactionsTablePr
                                     <SelectContent>
                                         {pharmacies.map((user: UserType) => (
                                             <SelectItem key={user.id} value={user.id}>
-                                                {user.fullName}
+                                                {user.bussinesName}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
