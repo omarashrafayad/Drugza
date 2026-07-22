@@ -25,7 +25,7 @@ import { Switch } from "@/components/ui/switch";
 import useGetAllRoles from "@/services/roles/getAllRoles";
 
 type Inputs = {
-    FullName: string;
+    bussinesName: string;
     Email: string;
     Password: string;
     PhoneNumber: string;
@@ -71,6 +71,7 @@ const RegForm = () => {
     } = useForm<Inputs>({
         defaultValues: {
             IsActive: true,
+            bussinesName: "",
             IsPopular: false,
             RoleId: "",
             AddressLines: [{ value: "" }],
@@ -131,7 +132,7 @@ const RegForm = () => {
         try {
             const formData = new FormData();
 
-            formData.append("FullName", data.FullName);
+            formData.append("bussinesName", data.bussinesName);
             formData.append("Email", data.Email);
             formData.append("Password", data.Password);
             formData.append("PhoneNumber", data.PhoneNumber);
@@ -180,8 +181,8 @@ const RegForm = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name</Label>
-                <Input id="fullName" {...register("FullName", { required: "Required" })} />
+                <Label htmlFor="bussinesName">Business Name</Label>
+                <Input id="bussinesName" {...register("bussinesName", { required: "Required" })} />
             </div>
 
 

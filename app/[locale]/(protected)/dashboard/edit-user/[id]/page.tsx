@@ -52,7 +52,7 @@ const EditUser = () => {
     useEffect(() => {
         if (user) {
             setActivate(user?.isActive ?? false);
-            setFullName(user?.fullName || "");
+            setFullName(user?.bussinesName || "");
             setEmail(user?.email || "");
             setPhoneNumber(user?.phoneNumber || "");
             setIsPopular(user?.isPopular ?? false);
@@ -68,7 +68,7 @@ const EditUser = () => {
     const handleUpdate = async () => {
         const formData = new FormData();
 
-        formData.append("FullName", fullName);
+        formData.append("bussinesName", fullName);
         formData.append("PhoneNumber", phoneNumber);
         formData.append("IsActive", activate.toString());
 

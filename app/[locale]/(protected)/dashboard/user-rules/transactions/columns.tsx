@@ -68,10 +68,9 @@ const AddressCell = ({ addresses, t }: { addresses: any; t?: (key: string) => st
 
 export type DataProps = {
   id: string | number;
-  fullName: string;
   email: string;
   phoneNumber: string;
-  businessName: string;
+  bussinesName: string;
   isPharmacy: boolean;
   regionName: string;
   isActive: boolean;
@@ -496,9 +495,9 @@ const ActionCell = ({ row, refresh, t, isRepresentative, showWorkingHours }: { r
 export const baseColumns = ({ refresh, t, isRepresentative, isProvider, showWorkingHours }: { refresh: () => void; t?: (key: string) => string, isRepresentative?: boolean, isProvider?: boolean, showWorkingHours?: boolean }): ColumnDef<DataProps>[] => {
   const columns: ColumnDef<DataProps>[] = [
     {
-      accessorKey: "fullName",
-      header: t?.("fullName") || "Full Name",
-      cell: ({ row }) => <div className="text-sm text-default-600">{row.original.fullName}</div>,
+      accessorKey: "bussinesName",
+      header: "Business Name",
+      cell: ({ row }) => <div className="text-sm text-default-600">{row.original.bussinesName}</div>,
     },
     {
       accessorKey: "email",

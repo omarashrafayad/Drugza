@@ -196,7 +196,7 @@ const TransactionsTable = () => {
                   <SelectLabel>Select provider</SelectLabel>
                   {users?.map((user: any) => (
                     <SelectItem key={user.id} value={user.id}>
-                      {user.fullName}
+                      {user.bussinesName}
                     </SelectItem>
                   ))}
                 </SelectGroup>
