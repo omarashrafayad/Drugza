@@ -14,6 +14,7 @@ export type UserType = {
     regionId?: string;
     accountid?: string;
     orderNum?: number;
+    MinOrder?: number;
     action: React.ReactNode;
     roles?: { id: string; roleId?: string; name?: string }[];
 };

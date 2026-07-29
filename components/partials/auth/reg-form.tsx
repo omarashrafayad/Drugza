@@ -38,6 +38,7 @@ type Inputs = {
     Country?: string;
     Zone?: any;
     Salary?: string;
+    MinOrder?: string;
 };
 
 const RegForm = () => {
@@ -73,6 +74,7 @@ const RegForm = () => {
             IsActive: true,
             bussinesName: "",
             IsPopular: false,
+            MinOrder: "",
             RoleId: "",
             AddressLines: [{ value: "" }],
             Area: "",
@@ -163,6 +165,7 @@ const RegForm = () => {
 
                 if (isProvider && data.IsPopular !== undefined) formData.append("IsPopular", String(data.IsPopular));
                 if (isProvider && profileImage) formData.append("ProfileImage", profileImage);
+                if (isProvider && data.MinOrder !== undefined) formData.append("MinOrder", String(data.MinOrder));
             }
 
             const result = await registerUser(formData);
@@ -408,6 +411,16 @@ const RegForm = () => {
                         )}
                     </div>
 
+                    <div>
+                        <Label htmlFor="minOrder">Min Order</Label>
+                        <Input
+                            id="minOrder"
+                            type="number"
+                            placeholder="Enter Min Order"
+                            {...register("MinOrder", { required: isProvider ? "Required" : false })}
+                        />
+                        {errors.MinOrder?.message && <span className="text-sm text-red-500">{String(errors.MinOrder.message)}</span>}
+                    </div>
                     <div className="space-y-2 mt-4">
                         <Label htmlFor="profileImage">Profile Image</Label>
                         <div className="flex items-center gap-3">

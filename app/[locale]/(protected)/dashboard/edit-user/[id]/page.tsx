@@ -26,7 +26,6 @@ const EditUser = () => {
     const isAdmin = Cookies.get("userRole") === "Admin";
     const isprovider = Cookies.get("userRole") === "Inventory";
 
-
     const { loading, user, getUserById } = useGettingUserById();
     const { loading: balanceLoading, balances, getBalanceForUser } = useGettingBalanceForUser();
     const { depositCash, loading: depositCashLoading } = useDepositCash();
@@ -41,6 +40,7 @@ const EditUser = () => {
     const [profileImage, setProfileImage] = useState<File | null>(null);
     const [isPopular, setIsPopular] = useState(false);
     const [orderNum, setOrderNum] = useState("");
+    const [MinOrder, setMinOrder] = useState("");
 
     useEffect(() => {
         if (id) {
@@ -57,6 +57,7 @@ const EditUser = () => {
             setPhoneNumber(user?.phoneNumber || "");
             setIsPopular(user?.isPopular ?? false);
             setOrderNum(user?.orderNum ? String(user?.orderNum) : "");
+            setMinOrder(user?.MinOrder ? String(user?.MinOrder) : "");
         }
     }, [user]);
 
@@ -75,6 +76,7 @@ const EditUser = () => {
         if (isInventory) {
             formData.append("IsPopular", isPopular.toString());
             formData.append("OrderNum", orderNum);
+            formData.append("MinOrder", MinOrder);
         }
 
         if (profileImage) {
@@ -83,6 +85,7 @@ const EditUser = () => {
 
         formData.append("PharmacyDetails", 'null');
         formData.append("DesName", 'null');
+
 
         try {
             const { success, error } = await updateUser(formData, id);
@@ -192,7 +195,16 @@ const EditUser = () => {
                                     onChange={(e) => setOrderNum(e.target.value)}
                                 />
                             </div></div> : null }
-                            
+                            <div className="flex items-center flex-wrap gap-2 mt-4">
+                                <Label className="w-[150px] flex-none" htmlFor="orderNum">MinOrder</Label>
+                                <Input
+                                    id="MinOrder"
+                                    type="number"
+                                    className="flex-1"
+                                    value={MinOrder}
+                                    onChange={(e) => setMinOrder(e.target.value)}
+                                />
+                            </div>
                         </>
                     )}
 
