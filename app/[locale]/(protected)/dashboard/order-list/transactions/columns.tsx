@@ -168,10 +168,10 @@ const StatusDialog = ({ row, refresh, t }: { row: any; refresh: () => void; t: (
     const numericValue = Number(selectedStatus) as OrderStatus;
     const currentStatus = row.original.status;
 
-    if (numericValue === 3 && (!selectedDelivery || !selectedPreparation)) {
-      toast.error(t("pleaseSelectPersonnel") || "Please select both delivery and preparation personnel");
-      return;
-    }
+    // if (numericValue === 3 && (!selectedDelivery || !selectedPreparation)) {
+    //   toast.error(t("pleaseSelectPersonnel") || "Please select both delivery and preparation personnel");
+    //   return;
+    // }
 
     let success = false;
     let errorMsg = "";
