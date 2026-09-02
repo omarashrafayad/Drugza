@@ -8,40 +8,17 @@ import Cookies from "js-cookie";
 export const basecolumns = ({ t }: { t: (key: string) => string }): ColumnDef<any>[] => [
  
   {
-    accessorKey: "inventoryName",
-    header: t("providerName"),
+    accessorKey: "pharmacyName",
+    header: "Pharmacy Name",
     cell: ({ row }) => {
-      const mainInventory = row.original.inventoryUser?.fullName;
-      const items = row.original.items || [];
-      const itemNames = Array.from(
-        new Set(
-          items
-            .map((item: any) => item.inventoryUser?.fullName)
-            .filter(Boolean)
-        )
-      );
-
-      const names = mainInventory ? Array.from(new Set([mainInventory, ...itemNames])) : itemNames;
-
-      if (names.length === 0) {
-        return <span>{t("unknown")}</span>;
-      }
-
-      const firstTwo = names.slice(0, 2);
-      const remaining = names.slice(2);
-
-      return (
-        <div className="flex flex-col gap-1">
-          {firstTwo.map((name: string, idx: number) => (
-            <span key={idx}>{name}</span>
-          ))}
-          {remaining.length > 0 && (
-            <span className="text-blue-600 cursor-pointer" title={remaining.join(", ")}>
-              +{remaining.length} more
-            </span>
-          )}
-        </div>
-      );
+     return <span>{row.original.pharmacyName}</span>;
+    },
+  },
+  {
+    accessorKey: "Provider Name",
+    header:"Provider Name",
+    cell: ({ row }) => {
+      return <span>{row.original.inventoryUser.bussinesName}</span>;
     },
   },
   {
@@ -70,11 +47,20 @@ export const basecolumns = ({ t }: { t: (key: string) => string }): ColumnDef<an
         statusStyles = "bg-yellow-100 text-yellow-700";
       }
 
-      else if (statusValue === 2) {
+      else if (statusValue === 1) {
         statusText = "approved";
         statusStyles = "bg-blue-100 text-blue-700";
-      } else if (statusValue === 3) {
+        
+      } else if (statusValue === 2) {
         statusText = "rejected";
+        statusStyles = "bg-red-100 text-red-700";
+      
+      } else if (statusValue === 3) {
+        statusText = "processing";
+        statusStyles = "bg-red-100 text-red-700";
+      
+      } else if (statusValue === 10) {
+        statusText = "partially refund";
         statusStyles = "bg-red-100 text-red-700";
       }
 
