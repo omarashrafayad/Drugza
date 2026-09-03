@@ -87,7 +87,7 @@ export default async function PrivacyPolicyPage({
                 {isRtl ? "سياسة الخصوصية" : "Privacy Policy"}
               </h1>
               <p className="text-slate-500 dark:text-slate-400 text-sm text-center">
-                {isRtl ? "منصة DENTZONE" : "DENTZONE Platform"}
+                {isRtl ? "منصة Drugza" : "Drugza Platform"}
               </p>
             </div>
           </div>
