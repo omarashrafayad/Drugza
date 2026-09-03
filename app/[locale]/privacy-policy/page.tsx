@@ -100,7 +100,7 @@ export default async function PrivacyPolicyPage({
           {/* Footer Section */}
           <div className="bg-slate-50 dark:bg-slate-900/50 py-8 px-10 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
             <div>
-              {isRtl ? "© ٢٠٢٤ DENTZONE. جميع الحقوق محفوظة." : "© 2024 DENTZONE. All rights reserved."}
+              {isRtl ? "© ٢٠٢٤ Drugza. جميع الحقوق محفوظة." : "© 2024 Drugza. All rights reserved."}
             </div>
             <div className="flex items-center gap-4">
               <span>{isRtl ? "آخر تحديث: " : "Last Updated: "}{formattedDate}</span>
