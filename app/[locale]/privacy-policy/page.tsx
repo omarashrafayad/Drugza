@@ -39,7 +39,7 @@ export default async function PrivacyPolicyPage({
     apiLang = locale === "en" ? "2" : "1";
   }
 
-  const apiUrl = `https://dentzoneapi.runasp.net/api/Policy/get-policy?lang=${apiLang}`;
+  const apiUrl = `https://drugzaapi.runasp.net/api/Policy/get-policy?lang=${apiLang}`;
 
   let htmlContent = "";
 

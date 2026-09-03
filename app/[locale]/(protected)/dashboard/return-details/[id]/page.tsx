@@ -57,8 +57,6 @@ const ReturnDetails = () => {
     getReturnById,
   } = GettingReturnById();
 
-
-
   const statusMap: Record<number, string> = {
     0: "requested",
     1: "approved",
@@ -116,8 +114,6 @@ const ReturnDetails = () => {
     statusOptions[
       selectedStatus as keyof typeof statusOptions
     ] || statusOptions.requested;
-
-
 
   useEffect(() => {
     if (id) {
