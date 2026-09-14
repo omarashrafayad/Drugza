@@ -8,7 +8,6 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -24,15 +23,16 @@ import {
 import TablePagination from "./table-pagination";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState, useMemo } from "react";
+import { Input } from "@/components/ui/input";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { Loader2, Plus } from "lucide-react";
 import { ActiveIngredient } from "@/types/activeIngredient";
-import SearchInput from "@/app/[locale]/(protected)/components/SearchInput/SearchInput";
 import { useGettingAllActiveIngredients } from "@/services/ActiveIngerients";
 import { AddActiveIngredientDialog } from "./add-active-ingredient-dialog";
 import { useTranslations } from "next-intl";
+import { useDebounce } from "use-debounce";
 
-type FilterStatus = "all" | "meltable" | "nonMeltable";
+const PAGE_SIZE = 10;
 
 export default function TransactionsTable() {
   const t = useTranslations("activeIngredients");
@@ -42,8 +42,9 @@ export default function TransactionsTable() {
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const [filteredIngredients, setFilteredIngredients] = useState<ActiveIngredient[]>([]);
-  const [selectedStatus, setSelectedStatus] = useState<FilterStatus>("all");
+  // Search state with debounce for backend search
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState<ActiveIngredient | null>(null);
@@ -51,14 +52,21 @@ export default function TransactionsTable() {
   const {
     loading,
     activeIngredients: data,
+    totalItems,
+    totalPages: apiTotalPages,
+    pageNumber: currentPage,
     getAllActiveIngredients,
     refreshActiveIngredients,
   } = useGettingAllActiveIngredients();
 
+  const handleRefresh = useCallback(() => {
+    refreshActiveIngredients();
+  }, [refreshActiveIngredients]);
+
+  // Backend search: trigger on debounced search change and reset to page 1
   useEffect(() => {
-    // Fetch with large page size so client-side table search & pagination work smoothly just like in order-list
-    getAllActiveIngredients(1, 1000, "");
-  }, [getAllActiveIngredients]);
+    getAllActiveIngredients(1, PAGE_SIZE, debouncedSearchTerm);
+  }, [debouncedSearchTerm, getAllActiveIngredients]);
 
   const handleEdit = (item: ActiveIngredient) => {
     setSelectedIngredient(item);
@@ -70,73 +78,68 @@ export default function TransactionsTable() {
     setDialogOpen(true);
   };
 
-  const filterByStatus = (status: FilterStatus, baseData = data) => {
-    setSelectedStatus(status);
-    if (!baseData) return;
-
-    if (status === "all") {
-      setFilteredIngredients(baseData);
-    } else if (status === "meltable") {
-      setFilteredIngredients(baseData.filter((item) => Boolean(item.isMeltable)));
-    } else if (status === "nonMeltable") {
-      setFilteredIngredients(baseData.filter((item) => !item.isMeltable));
-    }
-  };
-
-  useEffect(() => {
-    if (data) {
-      filterByStatus(selectedStatus, data);
-    }
-  }, [data]);
-
   const columns = useMemo(
     () =>
       baseColumns({
-        refresh: refreshActiveIngredients,
+        refresh: handleRefresh,
         onEdit: handleEdit,
         t,
+        pageNumber: currentPage,
+        pageSize: PAGE_SIZE,
       }),
-    [refreshActiveIngredients, t]
+    [handleRefresh, handleEdit, t, currentPage]
   );
 
   const table = useReactTable({
-    data: filteredIngredients ?? [],
+    data: data ?? [],
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
+    manualPagination: true,
+    pageCount: apiTotalPages,
     state: {
+      pagination: {
+        pageIndex: currentPage - 1,
+        pageSize: PAGE_SIZE,
+      },
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
     },
-    initialState: {
-      pagination: {
-        pageSize: 10,
-      },
+    onPaginationChange: (updater) => {
+      const newPagination =
+        typeof updater === "function"
+          ? updater({ pageIndex: currentPage - 1, pageSize: PAGE_SIZE })
+          : updater;
+
+      getAllActiveIngredients(
+        newPagination.pageIndex + 1,
+        PAGE_SIZE,
+        debouncedSearchTerm
+      );
     },
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
   });
 
   return (
     <Card className="w-full">
       <div className="px-5 py-4 flex flex-col md:flex-row items-center gap-4">
         <div className="w-full md:w-auto flex-1">
-          <SearchInput
-            data={data ?? []}
-            setFilteredData={setFilteredIngredients}
-            filterKey="name"
+          <Input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             placeholder={t("searchPlaceholder") || "Search active ingredients..."}
+            className="w-full max-w-xl"
           />
         </div>
 
         <div className="flex flex-wrap gap-2 items-center justify-center md:justify-end">
-
           <Button
             size="md"
             variant="default"
@@ -215,7 +218,7 @@ export default function TransactionsTable() {
           if (!val) setSelectedIngredient(null);
         }}
         editData={selectedIngredient}
-        onSuccess={refreshActiveIngredients}
+        onSuccess={handleRefresh}
       />
     </Card>
   );

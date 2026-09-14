@@ -13,19 +13,23 @@ interface ColumnsProps {
   refresh: () => void;
   onEdit: (item: ActiveIngredient) => void;
   t: (key: string) => string;
+  pageNumber?: number;
+  pageSize?: number;
 }
 
 export const baseColumns = ({
   refresh,
   onEdit,
   t,
+  pageNumber = 1,
+  pageSize = 10,
 }: ColumnsProps): ColumnDef<ActiveIngredient>[] => [
   {
     id: "index",
     header: "#",
     cell: ({ row }) => (
       <span className="text-xs font-semibold text-muted-foreground px-2">
-        {row.index + 1}
+        {(pageNumber - 1) * pageSize + row.index + 1}
       </span>
     ),
     enableSorting: false,

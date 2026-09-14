@@ -70,36 +70,65 @@ function useGettingAllActiveIngredients() {
         if (response.status === 200 || response.status === 201) {
           const resData = response.data;
 
+          let items: ActiveIngredient[] = [];
+          let total = 0;
+          let calculatedTotalPages = 1;
+
           if (Array.isArray(resData)) {
-            setActiveIngredients(resData);
-            setTotalItems(resData.length);
-            setTotalPages(Math.max(1, Math.ceil(resData.length / size)));
+            items = resData;
+            total = resData.length;
+            calculatedTotalPages = Math.max(1, Math.ceil(total / size));
           } else if (resData && Array.isArray(resData.items)) {
-            setActiveIngredients(resData.items);
-            const total =
+            items = resData.items;
+            const hasExplicitTotal =
+              resData.totalCount != null ||
+              resData.totalItems != null ||
+              resData.total != null ||
+              resData.count != null;
+
+            total =
               resData.totalCount ??
               resData.totalItems ??
-              resData.items.length;
-            setTotalItems(total);
-            setTotalPages(
-              resData.totalPages ?? Math.max(1, Math.ceil(total / size))
-            );
+              resData.total ??
+              resData.count ??
+              (resData.items.length === size ? (page + 1) * size : (page - 1) * size + resData.items.length);
+
+            calculatedTotalPages =
+              resData.totalPages ??
+              (hasExplicitTotal
+                ? Math.max(1, Math.ceil(total / size))
+                : resData.items.length === size
+                ? page + 1
+                : page);
           } else if (resData && Array.isArray(resData.data)) {
-            setActiveIngredients(resData.data);
-            const total =
+            items = resData.data;
+            const hasExplicitTotal =
+              resData.totalCount != null ||
+              resData.totalItems != null ||
+              resData.total != null;
+
+            total =
               resData.totalItems ??
               resData.totalCount ??
-              resData.data.length;
-            setTotalItems(total);
-            setTotalPages(
-              resData.totalPages ?? Math.max(1, Math.ceil(total / size))
-            );
+              resData.total ??
+              (resData.data.length === size ? (page + 1) * size : (page - 1) * size + resData.data.length);
+
+            calculatedTotalPages =
+              resData.totalPages ??
+              (hasExplicitTotal
+                ? Math.max(1, Math.ceil(total / size))
+                : resData.data.length === size
+                ? page + 1
+                : page);
           } else {
-            setActiveIngredients([]);
-            setTotalItems(0);
-            setTotalPages(1);
+            items = [];
+            total = 0;
+            calculatedTotalPages = 1;
           }
 
+          setActiveIngredients(items);
+          setTotalItems(total);
+          setTotalPages(Math.max(1, calculatedTotalPages));
           setPageNumber(page);
           setPageSize(size);
           setSearch(searchValue);
