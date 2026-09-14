@@ -724,7 +724,18 @@
     "activeIngredientUpdateError": "Failed to update active ingredient. Please try again.",
     "ingredientDetails": "Ingredient Details",
     "fillAllFields": "Please fill all fields.",
-    "updateActiveIngredient": "Update Active Ingredient"
+    "updateActiveIngredient": "Update Active Ingredient",
+    "searchPlaceholder": "Search active ingredients...",
+    "isMeltable": "Meltable",
+    "meltable": "Meltable",
+    "nonMeltable": "Non-meltable",
+    "productsCount": "Products",
+    "confirm": "Confirm",
+    "delete_title": "Delete Active Ingredient",
+    "delete_confirm": "Are you sure you want to delete this active ingredient?",
+    "save": "Save",
+    "namePlaceholder": "Enter ingredient name",
+    "All": "All"
   },
   "productList": {
     "viewWorkingHours": "View Working Hours",

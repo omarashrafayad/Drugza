@@ -103,6 +103,14 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               permission: "Permissions.Brand.View",
             },
             {
+              href: "/dashboard/active-ingredients",
+              label: t("ActiveIngredients"),
+              active: pathname === "/dashboard/active-ingredients",
+              children: [],
+              icon: "",
+              permission: "",
+            },
+            {
                 href: "/dashboard/banners",
                 label: t("ads"),
                 active: pathname.includes("/dashboard/banners") || pathname.includes("/dashboard/special-offers"),

@@ -225,8 +225,6 @@ const ReturnDetails = () => {
     );
   }
 
-
-
   return (
     <>
       {(userType === "Inventory" ||

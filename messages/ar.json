@@ -711,7 +711,18 @@
     "activeIngredientUpdateError": "فشل في تحديث المكون النشط. يرجى المحاولة مرة أخرى.",
     "ingredientDetails": "تفاصيل المكون",
     "fillAllFields": "يرجى ملء جميع الحقول.",
-    "updateActiveIngredient": "تحديث المكون النشط"
+    "updateActiveIngredient": "تحديث المكون النشط",
+    "searchPlaceholder": "ابحث عن المكونات النشطة...",
+    "isMeltable": "قابل للذوبان",
+    "meltable": "قابل للذوبان",
+    "nonMeltable": "غير قابل للذوبان",
+    "productsCount": "المنتجات",
+    "confirm": "تأكيد",
+    "delete_title": "حذف المكون النشط",
+    "delete_confirm": "هل أنت متأكد من رغبتك في حذف هذا المكون النشط؟",
+    "save": "حفظ",
+    "namePlaceholder": "أدخل اسم المكون",
+    "All": "الكل"
   },
   "productList": {
     "viewWorkingHours": "عرض مواعيد العمل",

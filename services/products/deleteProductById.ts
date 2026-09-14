@@ -8,7 +8,7 @@ function useDeleteProductById() {
     const deleteProductById = async (id: string | undefined): Promise<{ success: boolean; error?: string }> => {
         setLoading(true);
         try {
-            const response = await AxiosInstance.delete(`/api/Products/${id}`);
+            const response = await AxiosInstance.delete(`/api/Products/delete/${id}`);
             if ([200, 204].includes(response.status)) {
                 return { success: true };
             } else {

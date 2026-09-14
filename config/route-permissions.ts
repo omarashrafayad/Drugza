@@ -11,6 +11,7 @@ export const routePermissions: Record<string, string | string[]> = {
   "/dashboard/brand": "Permissions.Brand.View",
   "/dashboard/add-brand": "Permissions.Brand.Create",
   "/dashboard/edit-brand/:id": "Permissions.Brand.Edit",
+  "/dashboard/active-ingredients": "",
   "/dashboard/banners": "Permissions.Banner.View",
   "/dashboard/add-banner": "Permissions.Banner.Create",
   "/dashboard/edit-banner/:id": "Permissions.Banner.Edit",
