@@ -227,7 +227,7 @@ const AddProduct = () => {
                   </SelectTrigger>
                   <SelectContent className="w-[var(--radix-select-trigger-width)] max-h-60 overflow-y-auto">
                     <div 
-                      className="p-2 border-b sticky top-0 bg-popover z-10"
+                      className="p-2 border-b fixed top-0 bg-popover z-10 w-full"
                       onClick={(e) => e.stopPropagation()}
                       onKeyDown={(e) => e.stopPropagation()}
                     >

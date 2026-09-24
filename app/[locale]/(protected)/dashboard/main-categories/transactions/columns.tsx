@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { MainCategory } from "@/types/mainCategory";
 import { useDeleteMainCategory } from "@/services/MainCategories";
+import Image from "next/image";
 
 interface BaseColumnsProps {
   refresh: () => void;
@@ -19,6 +20,36 @@ export const baseColumns = ({
   onViewCategories,
   t,
 }: BaseColumnsProps): ColumnDef<MainCategory>[] => [
+  {
+    accessorKey: "image",
+    header: t("image") || "Image",
+    cell: ({ row }) => {
+      const item = row.original;
+      const imageUrl =
+        item.imageName ||
+        (item as any).imagePath ||
+        item.imageUrl ||
+        (item as any).image;
+
+      return (
+        <div className="relative w-12 h-12 overflow-hidden rounded-md border border-default-200">
+          {imageUrl ? (
+            <Image
+              src={imageUrl}
+              alt={item.name || "Main Category"}
+              fill
+              className="object-cover"
+              unoptimized
+            />
+          ) : (
+            <div className="w-full h-full bg-default-100 flex items-center justify-center text-[10px] text-default-400">
+              No Img
+            </div>
+          )}
+        </div>
+      );
+    },
+  },
   {
     accessorKey: "name",
     header: t("name"),

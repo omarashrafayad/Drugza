@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, ChangeEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,14 +13,16 @@ import {
   useUpdateMainCategory,
   useGettingMainCategoryById,
 } from "@/services/MainCategories";
-import { Loader2 } from "lucide-react";
+import { Loader2, FileImage, X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 const EditMainCategory = () => {
   const t = useTranslations("mainCategories");
   const router = useRouter();
   const params = useParams();
   const id = params?.id as string;
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { loading: updating, updateMainCategory } = useUpdateMainCategory();
   const {
@@ -32,6 +34,7 @@ const EditMainCategory = () => {
   const [name, setName] = useState("");
   const [arabicName, setArabicName] = useState("");
   const [description, setDescription] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -47,6 +50,12 @@ const EditMainCategory = () => {
     }
   }, [mainCategory]);
 
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
+  };
+
   const handleSubmit = async () => {
     if (!name.trim()) {
       toast.error(t("nameRequired"));
@@ -61,12 +70,16 @@ const EditMainCategory = () => {
       return;
     }
 
+    const formData = new FormData();
+    formData.append("Name", name.trim());
+    formData.append("ArabicName", arabicName.trim());
+    formData.append("Description", description.trim());
+    if (imageFile) {
+      formData.append("ImageFile", imageFile);
+    }
+
     try {
-      const result = await updateMainCategory(id, {
-        name: name.trim(),
-        arabicName: arabicName.trim(),
-        description: description.trim(),
-      });
+      const result = await updateMainCategory(id, formData);
 
       if (result.success) {
         toast.success(t("updatedSuccess"));
@@ -86,6 +99,12 @@ const EditMainCategory = () => {
       </div>
     );
   }
+
+  const existingImageUrl =
+    mainCategory?.imageName ||
+    (mainCategory as any)?.imagePath ||
+    mainCategory?.imageUrl ||
+    (mainCategory as any)?.image;
 
   return (
     <div className="grid grid-cols-12 gap-4 rounded-lg">
@@ -134,6 +153,61 @@ const EditMainCategory = () => {
                 onChange={(e) => setDescription(e.target.value)}
                 rows={4}
               />
+            </div>
+
+            <div className="flex items-center flex-wrap gap-2">
+              <Label className="w-[180px] flex-none text-sm font-medium" htmlFor="imageFile">
+                {t("image") || "Main Category Image"}
+              </Label>
+              <div className="flex-1 min-w-[300px] flex items-center gap-3">
+                {existingImageUrl && !imageFile && (
+                  <div className="relative w-12 h-12 rounded-md overflow-hidden border border-default-200 flex-none">
+                    <Image
+                      src={existingImageUrl}
+                      alt="Existing Image"
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+                )}
+
+                <Button 
+                  type="button"
+                  variant="outline" 
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex gap-2 items-center"
+                >
+                  <FileImage className="w-4 h-4" />
+                  {t("chooseFile") || "Choose File"}
+                </Button>
+                
+                <span className="text-sm text-muted-foreground truncate max-w-[200px]">
+                  {imageFile ? imageFile.name : (t("noFileChosen") || "No file chosen")}
+                </span>
+
+                {imageFile && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setImageFile(null)}
+                    className="text-destructive h-8 px-2 text-xs hover:bg-destructive/10"
+                  >
+                    <X className="w-3.5 h-3.5 mr-1" />
+                    Remove
+                  </Button>
+                )}
+
+                <input
+                  ref={fileInputRef}
+                  id="imageFile"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+              </div>
             </div>
           </CardContent>
         </Card>
