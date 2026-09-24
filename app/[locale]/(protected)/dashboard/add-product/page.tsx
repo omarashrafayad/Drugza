@@ -17,11 +17,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import GetCategories from "@/services/categories/getCategories";
 import useGetBrands from "@/services/brands/getAllBrands"; 
+import useGettingAllActiveIngredients from "@/services/ActiveIngerients/gettingAllActiveIngerients";
 import { Loader2, X } from "lucide-react";
 import useCreateProduct from "@/services/products/createProduct";
 import { toast } from "sonner";
 import { useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
+import { useDebounce } from "use-debounce";
 
 const AddProduct = () => {
   const t = useTranslations("productList");
@@ -35,6 +37,7 @@ const AddProduct = () => {
   const [arabicDescription, setArabicDescription] = useState<string>("");
   const [categoryId, setCategoryId] = useState<string>("");
   const [brandId, setBrandId] = useState<string>("");
+  const [activeIngredientId, setActiveIngredientId] = useState<string>("");
   const [isPopular, setIsPopular] = useState<boolean>(false);
   const [revenuePercentage, setRevenuePercentage] = useState<string>("");
   const [orderNum, setOrderNum] = useState<string>("");
@@ -47,14 +50,22 @@ const AddProduct = () => {
   const [brandSearch, setBrandSearch] = useState<string>("");
   const [filteredBrands, setFilteredBrands] = useState<any[]>([]);
 
+  const [activeIngredientSearch, setActiveIngredientSearch] = useState<string>("");
+  const [debouncedActiveIngredientSearch] = useDebounce(activeIngredientSearch, 400);
+
   const { loading: gettingAllCatLoading, data: categoriesData, gettingAllCategories } = GetCategories();
   const { loading: gettingBrandsLoading, brands, getAllBrands } = useGetBrands();
+  const { loading: gettingActiveIngredientsLoading, activeIngredients, getAllActiveIngredients } = useGettingAllActiveIngredients();
   const { createProduct, loading: creatingProductLoading } = useCreateProduct();
 
   useEffect(() => {
     gettingAllCategories();
     getAllBrands();
   }, []);
+
+  useEffect(() => {
+    getAllActiveIngredients(1, 50, debouncedActiveIngredientSearch);
+  }, [debouncedActiveIngredientSearch, getAllActiveIngredients]);
 
   useEffect(() => {
     if (categoriesData) {
@@ -100,6 +111,9 @@ const AddProduct = () => {
     formData.append("ArabicDescription", arabicDescription);
     formData.append("CategoryId", categoryId);
     formData.append("BrandId", brandId);
+    if (activeIngredientId) {
+      formData.append("ActiveIngerdientId", activeIngredientId);
+    }
     formData.append("IsPopular", isPopular.toString());
     formData.append("RevenuePercentage", revenuePercentage);
     formData.append("OrderNum", orderNum);
@@ -198,6 +212,51 @@ const AddProduct = () => {
                       {filteredBrands.map((brand: any) => (
                         <SelectItem key={brand.id} value={brand.id.toString()}>{brand.name}</SelectItem>
                       ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-center gap-2">
+                <Label className="w-[120px]">{t("activeIngredient")}</Label>
+                <Select value={activeIngredientId} onValueChange={(value) => setActiveIngredientId(value)}>
+                  <SelectTrigger className="flex-1">
+                    <SelectValue placeholder={t("selectActiveIngredientPlaceholder")} />
+                  </SelectTrigger>
+                  <SelectContent className="w-[var(--radix-select-trigger-width)] max-h-60 overflow-y-auto">
+                    <div 
+                      className="p-2 border-b sticky top-0 bg-popover z-10"
+                      onClick={(e) => e.stopPropagation()}
+                      onKeyDown={(e) => e.stopPropagation()}
+                    >
+                      <Input 
+                        placeholder={t("searchActiveIngredient")} 
+                        value={activeIngredientSearch}
+                        onChange={(e) => setActiveIngredientSearch(e.target.value)} 
+                        className="h-8 text-sm"
+                      />
+                    </div>
+                    <SelectGroup>
+                      {gettingActiveIngredientsLoading ? (
+                        <div className="flex items-center justify-center p-3 text-xs text-muted-foreground">
+                          <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                          Loading...
+                        </div>
+                      ) : activeIngredients && activeIngredients.length > 0 ? (
+                        activeIngredients.map((item: any) => (
+                          <SelectItem key={item.id} value={item.id.toString()}>
+                            <span className="block truncate max-w-[280px]">
+                              {item.name} {item.arabicName ? `(${item.arabicName})` : ""}
+                            </span>
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <div className="p-3 text-center text-xs text-muted-foreground">
+                          {t("noActiveIngredientFound")}
+                        </div>
+                      )}
                     </SelectGroup>
                   </SelectContent>
                 </Select>

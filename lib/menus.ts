@@ -87,6 +87,14 @@ export function getMenuList(pathname: string, t: any, permissions: string[] = []
               permission: "Permissions.ReturnOrder.View",
             },
             {
+              href: "/dashboard/main-categories",
+              label: t("mainCategories"),
+              active: pathname.includes("/dashboard/main-categories") || pathname.includes("/dashboard/add-main-category") || pathname.includes("/dashboard/edit-main-category"),
+              children: [],
+              icon: "",
+              permission: "",
+            },
+            {
               href: "/dashboard/categories",
               label: t("categories"),
               active: pathname === "/dashboard/categories",
