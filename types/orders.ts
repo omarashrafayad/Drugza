@@ -19,6 +19,9 @@ export type Orders = {
     items: OrderItem[]
     orderNumber?: string;
     deliveryName?: string;
+    deliveryOptionName?: string;
+    latlong?: string;
+    address?: string;
     couponCode?: string;
     couponPercentage?: number;
     couponPrecentage?: number;
